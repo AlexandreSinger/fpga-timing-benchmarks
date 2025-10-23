@@ -1,3 +1,9 @@
 runs/
 
 *.swp
+
+.venv
+
+z1010_cad.tar.gz
+
+z1010/
