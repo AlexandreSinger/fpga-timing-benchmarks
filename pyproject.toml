@@ -1,0 +1,28 @@
+[build-system]
+requires = [
+    "setuptools >= 61.2",
+    "setuptools_scm[toml] >= 6.2"
+]
+
+[project]
+name = "fpga-timing-benchmarks"
+authors = [{name = "Alex Singer"}]
+description = "Timing benchmarks used for qualifying an FPGA CAD tool."
+readme = "README.md"
+requires-python = ">= 3.8"
+license = {file = "LICENSE"}
+dynamic = ["version"]
+
+[tool.setuptools.dynamic]
+version = {attr = "fpga_timing_benchmarks.__version__"}
+
+[project.optional-dependencies]
+lint = [
+    "flake8 == 7.3.0"
+]
+
+[tool.setuptools]
+include-package-data = true
+packages = [
+    "fpga_timing_benchmarks"
+]

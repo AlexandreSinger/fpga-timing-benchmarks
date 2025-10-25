@@ -24,10 +24,10 @@ def synthesize_circuit(verilog_file: Path,
         output_blif_file (Path): The Path for the output blif file.
         run_dir (Path): The directory to run Yosys in.
     """
-    assert(os.path.exists(verilog_file))
-    assert(not os.path.exists(output_netlist_file))
-    assert(not os.path.exists(output_blif_file))
-    assert(os.path.exists(run_dir))
+    assert os.path.exists(verilog_file)
+    assert not os.path.exists(output_netlist_file)
+    assert not os.path.exists(output_blif_file)
+    assert os.path.exists(run_dir)
 
     # Change the directory to the given run directory.
     os.chdir(run_dir)
@@ -91,10 +91,10 @@ def verify_sdc_with_opensta(sdc_file: Path,
     Returns:
         bool: If the SDC file is valid or not.
     """
-    assert(os.path.exists(sdc_file))
-    assert(os.path.exists(netlist_file))
-    assert(all(os.path.exists(f) for f in liberty_files))
-    assert(os.path.exists(run_dir))
+    assert os.path.exists(sdc_file)
+    assert os.path.exists(netlist_file)
+    assert all(os.path.exists(f) for f in liberty_files)
+    assert os.path.exists(run_dir)
 
     # Change the current directory to the given run directory.
     os.chdir(run_dir)
@@ -160,7 +160,7 @@ def create_run_dir(base_dir: Path) -> Path:
     Returns:
         Path: The Path to the newly created run directory.
     """
-    assert(os.path.exists(base_dir))
+    assert os.path.exists(base_dir)
 
     # Find all of the existing run directories.
     run_folder_pattern = re.compile(r"^run(\d{3})$")

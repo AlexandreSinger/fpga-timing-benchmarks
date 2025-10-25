@@ -1,0 +1,3 @@
+[flake8]
+extend-exclude = build,.venv,z1010
+max-line-length = 100
