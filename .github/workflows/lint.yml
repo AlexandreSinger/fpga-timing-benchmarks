@@ -1,0 +1,27 @@
+
+name: lint
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint_python:
+    name: Lint Python Code
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v5
+
+      - name: Install Requirements
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install .[lint]
+
+      - name: Lint with Flake8
+        run: flake8 --statistics .
+
