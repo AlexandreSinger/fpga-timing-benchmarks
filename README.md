@@ -9,11 +9,14 @@ project requires.
 python3 -m venv .venv
 source .venv/bin/activate
 
+# Install this directory as a Python module.
+pip install .
+
 # Install siliconcompiler
 pip install --upgrade siliconcompiler
 
 # Install necessary tools using SiliconCompiler (these should update your PATH).
-sc-install yosys-wildebeest opensta
+sc-install yosys-wildebeest opensta vpr
 ```
 
 For the tests in this benchmark, we will run them on Zero ASIC's z1010 architecture.
@@ -27,4 +30,3 @@ and untar it into this directory.
 wget https://github.com/siliconcompiler/logiklib/releases/download/v0.2.0/z1010_cad.tar.gz
 tar -xvzf z1010_cad.tar.gz
 ```
-

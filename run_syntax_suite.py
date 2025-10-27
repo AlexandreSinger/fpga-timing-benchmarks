@@ -7,6 +7,35 @@ from subprocess import Popen, PIPE, TimeoutExpired
 from typing import List
 
 
+class FPGAArch:
+    name: str
+    route_chan_w: int
+    arch_xml_file: Path
+    arch_rr_graph: Path
+    device: str
+    liberty_files: List[Path]
+
+
+class Z1010FPGA(FPGAArch):
+    def __init__(self, z1010_cad_dir: Path):
+        self.name = "z1010"
+        self.route_chan_w = 100
+        self.arch_xml_file = os.path.join(z1010_cad_dir, "z1010.xml")
+        self.arch_rr_graph = os.path.join(z1010_cad_dir, "z1010_rr_graph.xml")
+        self.device = "z1010"
+
+        self.liberty_files = []
+        for file in os.listdir(z1010_cad_dir):
+            if file.endswith(".lib"):
+                self.liberty_files.append(os.path.join(z1010_cad_dir, file))
+
+    def verify(self) -> bool:
+        assert os.path.exists(self.arch_xml_file)
+        assert os.path.exists(self.arch_rr_graph)
+        assert all(os.path.exists(f) for f in self.liberty_files)
+        return True
+
+
 def synthesize_circuit(verilog_file: Path,
                        top_level_module: str,
                        output_netlist_file: Path,
@@ -148,6 +177,71 @@ def verify_sdc_with_opensta(sdc_file: Path,
     return True
 
 
+def test_vpr_sdc_syntax(sdc_file: Path,
+                        blif_file: Path,
+                        fpga_arch: FPGAArch,
+                        run_dir: Path) -> bool:
+    """
+    Test that the given SDC file can be parsed by VPR. This will run VPR up to
+    the packing step and check that it succeeds.
+
+    Args:
+        sdc_file (Path): The Path to the SDC file.
+        blif_file (Path): The Path to the blif file.
+        fpga_arch (FPGAArch): The FPGA architecture to run VPR on.
+        run_dir (Path): The directory to run VPR in.
+
+    Returns:
+        bool: If VPR successfully parsed the SDC file or not.
+    """
+    assert fpga_arch.verify()
+    assert os.path.exists(sdc_file)
+    assert os.path.exists(blif_file)
+    assert os.path.exists(run_dir)
+
+    # Change the current directory to the given run directory.
+    os.chdir(run_dir)
+
+    # Create a process that will run VPR with the given SDC file. This does not
+    # need to run VPR to completion, so we only run up to the end of packing.
+    process_args = ["vpr",
+                    fpga_arch.arch_xml_file,
+                    blif_file,
+                    "--device", fpga_arch.device,
+                    "--sdc_file", sdc_file,
+                    "--read_rr_graph", fpga_arch.arch_rr_graph,
+                    "--route_chan_width", str(fpga_arch.route_chan_w),
+                    "--pack"]
+    process = Popen(process_args,
+                    stdout=PIPE,
+                    stderr=PIPE)
+
+    # Run the process.
+    try:
+        stdout, stderr = process.communicate(timeout=None)
+    except TimeoutExpired:
+        process.kill()
+        stdout, stderr = process.communicate()
+
+    # Save stdout and stderr to files for debugging.
+    with open("vpr_test_sdc_syntax.out", "w") as f:
+        f.write(stdout.decode())
+        f.close()
+    with open("vpr_test_sdc_syntax_err.out", "w") as f:
+        f.write(stderr.decode())
+        f.close()
+
+    # Check for a syntax error in VTR's output.
+    if stderr.decode().find("syntax error") != -1:
+        return False
+
+    # Check if VPR failed to run.
+    if stdout.decode().find("VPR succeeded") == -1:
+        return False
+
+    return True
+
+
 def create_run_dir(base_dir: Path) -> Path:
     """
     Given a base run directory, create a unique run folder within it. If the
@@ -200,6 +294,10 @@ if __name__ == "__main__":
     output_netlist_file = os.path.join(run_dir_path, "example_netlist.vg")
     output_blif_file = os.path.join(run_dir_path, "example_blif.blif")
 
+    # Setup the z1010 FPGA information.
+    z1010_cad_dir = os.path.join(script_dir_path, "z1010", "cad")
+    z1010_fpga = Z1010FPGA(z1010_cad_dir)
+
     synthesize_circuit(verilog_file=example_verilog_file,
                        top_level_module=top_level_module,
                        output_netlist_file=output_netlist_file,
@@ -208,11 +306,21 @@ if __name__ == "__main__":
 
     sdc_is_valid = verify_sdc_with_opensta(sdc_file=example_sdc_file,
                                            netlist_file=output_netlist_file,
-                                           liberty_files=[],
+                                           liberty_files=z1010_fpga.liberty_files,
                                            top_level_module=top_level_module,
                                            run_dir=run_dir_path)
 
     if not sdc_is_valid:
-        print("Test SDC is invalid!")
+        print("SDC is invalid!")
     else:
         print("SDC is valid!")
+
+    vpr_succeeded = test_vpr_sdc_syntax(sdc_file=example_sdc_file,
+                                        blif_file=output_blif_file,
+                                        fpga_arch=z1010_fpga,
+                                        run_dir=run_dir_path)
+
+    if vpr_succeeded:
+        print("VPR successfully parsed the SDC file.")
+    else:
+        print("VPR failed to parse the SDC file.")
