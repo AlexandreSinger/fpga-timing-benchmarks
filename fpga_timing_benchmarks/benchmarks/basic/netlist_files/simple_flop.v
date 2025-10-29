@@ -1,4 +1,3 @@
-
 module simple_flop(
     input wire clk,
     input wire in,
