@@ -2,6 +2,7 @@
 
 import os
 import re
+import csv
 from pathlib import Path
 from subprocess import Popen, PIPE, TimeoutExpired
 from typing import List
@@ -300,6 +301,14 @@ if __name__ == "__main__":
     z1010_cad_dir = os.path.join(script_dir_path, "z1010", "cad")
     z1010_fpga = Z1010FPGA(z1010_cad_dir)
 
+    # Collect result data for the designs.
+    result_data = [[
+        "Test Suite",
+        "Test Name",
+        "SDC Verified with OpenSTA?",
+        "SDC Parsed by VPR Without Error?",
+    ]]
+
     # Test the given design.
     for design in basic_benchmark.designs:
         assert design.netlist_type is NetlistType.VERILOG
@@ -337,3 +346,17 @@ if __name__ == "__main__":
             print("\tVPR successfully parsed the SDC file.")
         else:
             print("\tVPR failed to parse the SDC file.")
+
+        result_data.append([
+            basic_benchmark.name,
+            design.test_name,
+            str(sdc_is_valid),
+            str(vpr_succeeded),
+        ])
+
+    # Write the results to a CSV file.
+    result_csv_file = os.path.join(run_dir_path, "results.csv")
+    with open(result_csv_file, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(result_data)
+    print(f"Results have been written to {result_csv_file}")
