@@ -12,7 +12,7 @@ source .venv/bin/activate
 # Install this directory as a Python module.
 pip install .
 
-# Install siliconcompiler
+# Install siliconcompiler.
 pip install --upgrade siliconcompiler
 
 # Install necessary tools using SiliconCompiler (these should update your PATH).
