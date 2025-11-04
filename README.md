@@ -3,7 +3,7 @@
 The scripts require some CAD tools in order to run and test the benchmarks. We
 will be using the SiliconCompiler project to manage the tools and versions.
 The following commands should install the correct versions of the tools that this
-project requires.
+project requires..
 ```
 # Optional: Create a python virtual enviornment.
 python3 -m venv .venv
