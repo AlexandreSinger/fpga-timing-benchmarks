@@ -1,0 +1,1 @@
+set_min_delay 4.0 -fall -from [get_ports {clk0}] -rise_from clk2 -fall_from pin* -rise_through [get_ports clk*] -fall_through ff1 -to {clk1 clk2} -rise_to [get_pins flop_Q] -fall_to port1 -probe -reset_path

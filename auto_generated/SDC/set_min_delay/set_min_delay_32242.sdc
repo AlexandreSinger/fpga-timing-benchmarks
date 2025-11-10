@@ -1,0 +1,1 @@
+set_min_delay 10 -from [get_ports {clk0}] -rise_from pin* -fall_from [get_ports clk1] -through adder1 -rise_through pin* -fall_through and1 -rise_to ff* -fall_to [get_clocks {core_clk}] -ignore_clock_latency -probe

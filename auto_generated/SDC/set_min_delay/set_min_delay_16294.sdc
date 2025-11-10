@@ -1,0 +1,1 @@
+set_min_delay 4.0 -rise -fall -from core_clock -rise_from [get_clocks {core_clk}] -fall_from port* -through [get_ports clk*] -rise_through * -to [get_pins flop_Q] -rise_to clk* -fall_to ff* -ignore_clock_latency -reset_path

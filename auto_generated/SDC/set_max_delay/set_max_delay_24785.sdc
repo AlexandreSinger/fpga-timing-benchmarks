@@ -1,0 +1,1 @@
+set_max_delay 10 -fall -from [get_ports clk*] -rise_from * -fall_to and1 -ignore_clock_latency -probe -reset_path

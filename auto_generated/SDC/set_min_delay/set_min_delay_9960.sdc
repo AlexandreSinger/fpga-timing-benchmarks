@@ -1,0 +1,1 @@
+set_min_delay 4.0 -rise -fall -from * -rise_from * -fall_from [get_ports clk*] -fall_through pin1 -to [get_ports clk*] -probe

@@ -1,0 +1,1 @@
+set_max_delay 30 -rise -from * -through adder1 -rise_through adder1 -to pin2 -ignore_clock_latency -reset_path

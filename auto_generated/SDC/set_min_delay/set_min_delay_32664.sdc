@@ -1,0 +1,1 @@
+set_min_delay 10 -rise -fall -from pin* -rise_from [get_clocks {core_clk}] -fall_from [get_pins flop_Q] -through ff* -rise_through * -fall_through pin2 -to clk* -rise_to [get_ports clk1] -fall_to pin* -reset_path

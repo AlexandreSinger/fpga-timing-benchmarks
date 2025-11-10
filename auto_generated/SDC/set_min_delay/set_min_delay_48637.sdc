@@ -1,0 +1,1 @@
+set_min_delay 30 -from xor* -rise_from [get_ports clk*] -fall_from [get_ports clk1] -through [get_pins flop_Q] -fall_through [get_ports clk*] -to port* -rise_to [get_pins flop_Q] -fall_to and1 -ignore_clock_latency -probe

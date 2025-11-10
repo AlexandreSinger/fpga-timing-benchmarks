@@ -1,0 +1,1 @@
+set_false_path -setup -hold -rise -reset_path -fall_from [get_ports {clk0}] -through net1 -rise_through [get_ports {clk0}] -fall_through [get_ports clk*] -to [get_ports clk1] -rise_to [get_ports clk*] -fall_to port1

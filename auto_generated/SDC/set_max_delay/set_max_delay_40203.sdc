@@ -1,0 +1,1 @@
+set_max_delay 30 -rise -from adder1 -rise_from [get_ports {clk0}] -rise_through * -rise_to adder1 -fall_to xor1 -reset_path

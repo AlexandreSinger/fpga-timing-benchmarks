@@ -1,0 +1,1 @@
+set_false_path -setup -hold -rise -from [get_ports {clk0}] -rise_from [get_pins flop_Q] -fall_from [get_ports clk*] -through and1 -rise_through {net1, net2} -fall_through pin2 -to port* -rise_to [get_ports {clk0}]

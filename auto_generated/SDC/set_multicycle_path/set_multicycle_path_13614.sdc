@@ -1,0 +1,1 @@
+set_multicycle_path 2 -fall -end -rise_from xor1 -through net2 -rise_through [get_ports clk*] -rise_to and1

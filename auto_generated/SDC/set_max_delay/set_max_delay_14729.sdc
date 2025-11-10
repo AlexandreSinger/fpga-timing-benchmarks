@@ -1,0 +1,1 @@
+set_max_delay 4.0 -from port1 -rise_from [get_ports clk*] -fall_from port1 -through {net1, net2} -fall_through xor* -to [get_ports {clk0}] -rise_to * -fall_to [get_ports {clk0}] -probe

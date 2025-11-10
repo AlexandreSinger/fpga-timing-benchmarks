@@ -1,0 +1,1 @@
+set_multicycle_path 2 -setup -fall -end -through [get_pins flop_Q] -rise_through and1 -to * -rise_to clk2 -reset_path

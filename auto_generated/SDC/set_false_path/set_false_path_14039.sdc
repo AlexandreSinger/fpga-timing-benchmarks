@@ -1,0 +1,1 @@
+set_false_path -setup -fall -reset_path -from [get_ports clk2] -rise_from [get_clocks {core_clk}] -fall_from [get_clocks {core_clk}] -through * -fall_through [get_ports clk1] -fall_to [get_ports clk2]

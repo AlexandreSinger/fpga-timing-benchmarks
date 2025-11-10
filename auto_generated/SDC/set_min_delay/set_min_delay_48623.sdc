@@ -1,0 +1,1 @@
+set_min_delay 30 -from and1 -rise_from [get_clocks {core_clk}] -fall_from [get_ports clk1] -through and1 -rise_through * -fall_through ff1 -to [get_ports clk*] -fall_to * -ignore_clock_latency -reset_path

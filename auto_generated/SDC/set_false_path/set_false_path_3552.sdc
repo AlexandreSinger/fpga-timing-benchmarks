@@ -1,0 +1,1 @@
+set_false_path -setup -hold -rise -reset_path -to adder1 -fall_to pin2

@@ -1,0 +1,1 @@
+set_multicycle_path 2 -setup -hold -rise -fall -start -end -fall_through adder1 -rise_to port2

@@ -1,0 +1,1 @@
+set_max_delay 10 -rise -fall -from [get_clocks {core_clk}] -fall_from clk1 -through [get_ports clk*] -rise_through [get_pins flop_Q] -fall_through [get_ports {clk0}] -rise_to ff* -fall_to [get_ports clk2] -probe -reset_path

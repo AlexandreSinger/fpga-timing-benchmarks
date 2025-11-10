@@ -1,0 +1,1 @@
+set_max_delay 30 -rise -fall_from ff* -through * -rise_through net* -fall_through pin1 -ignore_clock_latency

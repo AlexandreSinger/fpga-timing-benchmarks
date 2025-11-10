@@ -1,0 +1,1 @@
+set_min_delay 30 -rise -fall -from xor1 -rise_from [get_ports {clk0}] -fall_from [get_ports clk*] -rise_through xor1 -fall_through [get_ports clk1] -rise_to [get_ports {clk0}] -fall_to * -probe -reset_path

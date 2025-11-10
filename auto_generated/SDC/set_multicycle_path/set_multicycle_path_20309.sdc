@@ -1,0 +1,1 @@
+set_multicycle_path 2 -hold -rise -fall -rise_from * -rise_through * -to pin* -reset_path

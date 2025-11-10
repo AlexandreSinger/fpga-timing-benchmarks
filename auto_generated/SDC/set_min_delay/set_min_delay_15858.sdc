@@ -1,0 +1,1 @@
+set_min_delay 4.0 -from clk2 -rise_from * -fall_from adder1 -through [get_pins flop_Q] -rise_through pin2 -fall_through xor1 -rise_to {clk1 clk2} -fall_to [get_pins flop_Q] -ignore_clock_latency -probe

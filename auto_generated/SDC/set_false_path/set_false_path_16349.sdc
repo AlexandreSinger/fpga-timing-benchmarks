@@ -1,0 +1,1 @@
+set_false_path -setup -rise -fall -reset_path -from ff* -rise_from [get_ports clk1] -fall_from [get_clocks {core_clk}] -rise_through adder1 -fall_through ff1 -to [get_ports clk*] -rise_to * -fall_to adder1

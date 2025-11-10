@@ -1,0 +1,1 @@
+set_max_delay 10 -fall -rise_from [get_pins flop_Q] -fall_from [get_ports clk2] -through pin* -rise_through ff1 -fall_through [get_ports clk*] -to port2 -rise_to [get_ports clk*] -fall_to pin1 -reset_path

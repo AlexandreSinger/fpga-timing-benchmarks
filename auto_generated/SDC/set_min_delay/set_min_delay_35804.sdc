@@ -1,0 +1,1 @@
+set_min_delay 30 -rise_from port* -fall_from xor* -through pin2 -ignore_clock_latency -probe

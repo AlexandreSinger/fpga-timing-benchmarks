@@ -1,0 +1,1 @@
+set_multicycle_path 2 -fall -start -through {net1, net2} -rise_through ff1 -to clk* -rise_to ff* -reset_path

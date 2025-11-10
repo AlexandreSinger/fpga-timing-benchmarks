@@ -1,0 +1,1 @@
+set_min_delay 30 -rise -fall -from [get_clocks {core_clk}] -rise_from adder1 -fall_from * -through [get_ports clk*] -rise_through net2 -fall_through net* -to port* -rise_to [get_ports clk*] -fall_to ff1 -reset_path

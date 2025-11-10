@@ -1,0 +1,1 @@
+set_max_delay 4.0 -fall_through [get_pins flop_Q] -to port2 -rise_to core_clock -probe

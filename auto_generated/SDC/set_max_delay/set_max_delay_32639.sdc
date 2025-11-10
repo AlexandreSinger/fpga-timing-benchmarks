@@ -1,0 +1,1 @@
+set_max_delay 10 -fall -rise_from [get_ports {clk0}] -fall_from port1 -through net1 -rise_through {net1, net2} -fall_through pin2 -to core_clock -rise_to * -fall_to core_clock -ignore_clock_latency -probe

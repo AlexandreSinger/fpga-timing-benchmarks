@@ -1,0 +1,1 @@
+set_multicycle_path 2 -setup -hold -rise -fall -end -fall_through pin1 -to port1 -fall_to [get_pins flop_Q]

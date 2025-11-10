@@ -1,0 +1,1 @@
+set_false_path -reset_path -from port1 -rise_from [get_clocks {core_clk}] -rise_through [get_pins flop_Q] -fall_through ff1 -to xor* -fall_to xor*

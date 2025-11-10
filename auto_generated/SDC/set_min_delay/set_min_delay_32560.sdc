@@ -1,0 +1,1 @@
+set_min_delay 10 -rise -from [get_ports clk2] -rise_from [get_clocks {core_clk}] -through adder1 -rise_through {net1, net2} -to port2 -rise_to [get_ports clk*] -fall_to clk1 -ignore_clock_latency -probe -reset_path

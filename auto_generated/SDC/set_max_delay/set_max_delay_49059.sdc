@@ -1,0 +1,1 @@
+set_max_delay 30 -rise -fall -from * -rise_from core_clock -fall_from xor1 -through xor1 -rise_through net2 -fall_through xor1 -rise_to [get_clocks {core_clk}] -ignore_clock_latency -probe -reset_path

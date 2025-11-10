@@ -1,0 +1,1 @@
+set_max_delay 10 -fall -fall_from [get_ports clk*] -through [get_pins flop_Q] -fall_through net* -rise_to [get_ports clk2] -fall_to core_clock -probe

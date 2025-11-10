@@ -1,0 +1,1 @@
+set_min_delay 10 -from and1 -rise_from xor* -fall_from ff1 -through [get_ports clk1] -rise_through pin* -fall_through net2 -to {clk1 clk2} -rise_to [get_pins flop_Q] -fall_to [get_ports {clk0}] -probe -reset_path

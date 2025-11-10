@@ -1,0 +1,1 @@
+set_min_delay 4.0 -fall -fall_from pin2 -to [get_ports clk1] -probe

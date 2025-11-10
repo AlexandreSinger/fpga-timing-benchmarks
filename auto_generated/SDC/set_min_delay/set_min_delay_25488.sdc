@@ -1,0 +1,1 @@
+set_min_delay 10 -fall -rise_through [get_ports clk*] -to clk* -rise_to ff* -fall_to {clk1 clk2} -ignore_clock_latency -reset_path

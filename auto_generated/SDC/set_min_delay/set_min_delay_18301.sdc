@@ -1,0 +1,1 @@
+set_min_delay 10 -rise -rise_from * -through [get_ports clk1] -ignore_clock_latency -probe

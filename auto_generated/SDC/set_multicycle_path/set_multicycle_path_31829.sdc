@@ -1,0 +1,1 @@
+set_multicycle_path 2 -setup -fall -from [get_clocks {core_clk}] -rise_from adder1 -rise_through {net1, net2} -to port* -fall_to clk1 -reset_path

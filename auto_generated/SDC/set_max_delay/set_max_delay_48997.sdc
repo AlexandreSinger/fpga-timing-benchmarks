@@ -1,0 +1,1 @@
+set_max_delay 30 -fall -from adder1 -rise_from [get_ports clk2] -fall_from ff* -rise_through net2 -fall_through xor* -to [get_clocks {core_clk}] -rise_to * -fall_to pin1 -ignore_clock_latency -reset_path

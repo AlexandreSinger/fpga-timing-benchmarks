@@ -1,0 +1,1 @@
+set_min_delay 30 -rise -fall -rise_from pin2 -fall_from * -through and1 -rise_through * -fall_through {net1, net2} -to [get_pins flop_Q] -rise_to core_clock -fall_to core_clock -ignore_clock_latency -reset_path

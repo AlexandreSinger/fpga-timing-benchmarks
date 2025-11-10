@@ -1,0 +1,1 @@
+set_false_path -setup -rise -reset_path -from [get_clocks {core_clk}] -rise_from * -fall_from [get_pins flop_Q] -through xor1 -rise_through and1 -fall_through pin* -to port* -rise_to [get_ports clk1] -fall_to ff1

@@ -1,0 +1,1 @@
+set_min_delay 30 -rise_from [get_pins flop_Q] -fall_from [get_ports {clk0}] -through [get_pins flop_Q] -fall_through net2 -to adder1 -rise_to [get_ports {clk0}] -fall_to [get_ports {clk0}] -ignore_clock_latency -probe -reset_path

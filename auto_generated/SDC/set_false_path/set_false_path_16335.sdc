@@ -1,0 +1,1 @@
+set_false_path -setup -hold -fall -reset_path -from [get_pins flop_Q] -rise_from port1 -fall_from [get_ports clk2] -through xor* -rise_through net* -fall_through net* -rise_to [get_ports clk*] -fall_to ff*

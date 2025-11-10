@@ -1,0 +1,1 @@
+set_multicycle_path 2 -setup -start -end -fall_from port1 -fall_through net* -fall_to * -reset_path

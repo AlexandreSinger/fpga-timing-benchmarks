@@ -1,0 +1,1 @@
+set_min_delay 10 -rise -fall -from adder1 -rise_from port2 -fall_from ff1 -through [get_pins flop_Q] -rise_through net2 -fall_through pin2 -to adder1 -rise_to port1 -ignore_clock_latency -probe -reset_path

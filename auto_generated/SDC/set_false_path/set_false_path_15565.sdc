@@ -1,0 +1,1 @@
+set_false_path -setup -rise -from [get_ports clk*] -rise_from * -fall_from port* -through [get_ports clk1] -rise_through [get_ports clk1] -fall_through * -to [get_ports clk2] -fall_to [get_ports clk*]

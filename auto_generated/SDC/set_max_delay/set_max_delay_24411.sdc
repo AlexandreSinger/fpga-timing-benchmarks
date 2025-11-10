@@ -1,0 +1,1 @@
+set_max_delay 10 -rise -fall_from xor1 -through pin1 -fall_through pin1 -rise_to [get_clocks {core_clk}] -fall_to * -ignore_clock_latency

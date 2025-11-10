@@ -1,0 +1,1 @@
+set_max_delay 4.0 -rise -from ff1 -rise_from ff1 -through * -rise_through net1 -fall_through adder1 -rise_to [get_ports clk*] -fall_to port2 -ignore_clock_latency -probe

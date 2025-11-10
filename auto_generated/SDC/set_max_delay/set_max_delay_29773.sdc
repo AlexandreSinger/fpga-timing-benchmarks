@@ -1,0 +1,1 @@
+set_max_delay 10 -rise -fall -rise_from ff* -fall_from [get_ports {clk0}] -through [get_ports clk*] -rise_through * -to [get_ports {clk0}] -rise_to port2 -ignore_clock_latency

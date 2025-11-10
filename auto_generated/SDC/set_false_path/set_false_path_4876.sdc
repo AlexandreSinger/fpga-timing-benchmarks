@@ -1,0 +1,1 @@
+set_false_path -hold -rise -fall -fall_through [get_pins flop_Q] -to [get_clocks {core_clk}] -rise_to clk1

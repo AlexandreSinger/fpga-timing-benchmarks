@@ -1,0 +1,1 @@
+set_clock_uncertainty 1 -rise -fall -setup -rise_from core_clock -to core_clock -rise_to core_clock -fall_to core_clock

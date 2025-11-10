@@ -1,0 +1,1 @@
+set_clock_uncertainty 1 -fall -setup -fall_from * -to core_clock core_clock

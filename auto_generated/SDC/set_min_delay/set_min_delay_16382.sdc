@@ -1,0 +1,1 @@
+set_min_delay 4.0 -fall -from [get_pins flop_Q] -rise_from and1 -fall_from xor* -through [get_pins flop_Q] -rise_through pin2 -fall_through xor1 -to [get_pins flop_Q] -rise_to xor* -fall_to pin2 -ignore_clock_latency -probe -reset_path

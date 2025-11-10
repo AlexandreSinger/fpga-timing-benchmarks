@@ -1,0 +1,1 @@
+set_min_delay 10 -fall -from ff* -rise_from port1 -through * -fall_through [get_pins flop_Q]

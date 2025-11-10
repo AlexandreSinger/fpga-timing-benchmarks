@@ -1,0 +1,1 @@
+set_max_delay 4.0 -rise -fall -from [get_ports clk2] -rise_from clk2 -fall_from and1 -through xor* -rise_through adder1 -to port2 -rise_to [get_ports clk1] -fall_to * -ignore_clock_latency -probe -reset_path

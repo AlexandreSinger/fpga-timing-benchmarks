@@ -1,0 +1,1 @@
+set_max_delay 4.0 -fall -from core_clock -rise_from [get_clocks {core_clk}] -fall_from [get_ports clk*] -through xor1 -rise_through and1 -fall_to clk2

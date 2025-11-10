@@ -1,0 +1,1 @@
+set_max_delay 4.0 -fall -from pin* -fall_from * -through [get_ports clk*] -rise_through xor1 -fall_through [get_ports clk1] -to [get_ports clk*] -rise_to xor* -fall_to [get_ports clk2] -ignore_clock_latency -probe -reset_path

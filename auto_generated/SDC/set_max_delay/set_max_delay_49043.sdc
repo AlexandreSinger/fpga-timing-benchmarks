@@ -1,0 +1,1 @@
+set_max_delay 30 -from xor1 -rise_from clk2 -through xor* -rise_through {net1, net2} -fall_through xor1 -to xor1 -rise_to [get_ports clk1] -fall_to [get_ports clk2] -ignore_clock_latency -probe -reset_path

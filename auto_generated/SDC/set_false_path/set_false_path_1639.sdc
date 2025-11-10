@@ -1,0 +1,1 @@
+set_false_path -setup -hold -rise_from ff* -fall_from [get_ports {clk0}] -rise_to [get_pins flop_Q]

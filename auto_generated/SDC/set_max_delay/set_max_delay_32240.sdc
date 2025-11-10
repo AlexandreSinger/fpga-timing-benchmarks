@@ -1,0 +1,1 @@
+set_max_delay 10 -from [get_ports clk2] -rise_from clk* -fall_from pin* -through [get_ports clk1] -rise_through and1 -fall_through pin1 -to [get_ports clk1] -fall_to [get_ports clk2] -probe -reset_path

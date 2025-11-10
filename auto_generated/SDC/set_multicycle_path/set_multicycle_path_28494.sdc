@@ -1,0 +1,1 @@
+set_multicycle_path 2 -setup -hold -start -end -from [get_ports {clk0}] -to clk1 -fall_to [get_ports clk2] -reset_path

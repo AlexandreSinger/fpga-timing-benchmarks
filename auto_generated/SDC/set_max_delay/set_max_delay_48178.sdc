@@ -1,0 +1,1 @@
+set_max_delay 30 -rise -from xor1 -rise_from [get_ports {clk0}] -fall_from [get_ports clk*] -through xor1 -rise_through [get_pins flop_Q] -fall_through [get_ports {clk0}] -to pin1 -rise_to xor1 -probe

@@ -1,0 +1,1 @@
+set_min_delay 10 -fall_from pin2 -through pin2 -rise_through net2 -fall_through {net1, net2} -fall_to and1 -ignore_clock_latency -reset_path

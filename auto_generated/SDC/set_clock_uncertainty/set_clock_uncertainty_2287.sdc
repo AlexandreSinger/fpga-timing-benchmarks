@@ -1,0 +1,1 @@
+set_clock_uncertainty 1 -rise -fall -setup [get_ports {clk0}]

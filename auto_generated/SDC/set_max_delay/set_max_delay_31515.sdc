@@ -1,0 +1,1 @@
+set_max_delay 10 -rise -fall -from [get_pins flop_Q] -fall_from core_clock -through [get_pins flop_Q] -rise_through {net1, net2} -fall_through [get_ports clk1] -to [get_pins flop_Q] -ignore_clock_latency -reset_path

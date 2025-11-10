@@ -1,0 +1,1 @@
+set_min_delay 30 -fall -from pin2 -rise_from [get_ports {clk0}] -fall_from port2 -through {net1, net2} -rise_through xor1 -fall_through [get_pins flop_Q] -to [get_ports clk2] -rise_to [get_pins flop_Q] -probe

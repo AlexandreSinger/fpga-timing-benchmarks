@@ -1,0 +1,1 @@
+set_clock_uncertainty 1 -rise -from core_clock -to [get_clocks {core_clk}]

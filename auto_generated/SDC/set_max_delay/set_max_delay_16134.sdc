@@ -1,0 +1,1 @@
+set_max_delay 4.0 -rise -from port2 -rise_from port* -fall_from [get_ports clk*] -through pin* -rise_through [get_ports clk1] -fall_through xor* -to and1 -rise_to core_clock -fall_to [get_ports clk*] -ignore_clock_latency

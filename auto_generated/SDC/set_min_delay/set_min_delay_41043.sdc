@@ -1,0 +1,1 @@
+set_min_delay 30 -fall -from port2 -rise_from ff* -fall_from port2 -ignore_clock_latency -probe -reset_path

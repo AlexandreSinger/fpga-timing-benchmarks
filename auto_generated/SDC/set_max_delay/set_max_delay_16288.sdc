@@ -1,0 +1,1 @@
+set_max_delay 4.0 -rise -fall -from core_clock -rise_from {clk1 clk2} -fall_from * -through net1 -rise_through ff* -fall_through net2 -rise_to [get_ports {clk0}] -fall_to port1 -ignore_clock_latency -probe

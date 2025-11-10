@@ -1,0 +1,1 @@
+set_multicycle_path 2 -setup -rise -fall -end -from ff* -fall_from clk1 -fall_through [get_ports clk*] -reset_path

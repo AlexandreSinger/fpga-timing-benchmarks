@@ -1,0 +1,1 @@
+set_min_delay 10 -rise -fall -from and1 -rise_from pin1 -through [get_ports {clk0}] -rise_through pin2 -to [get_ports clk2] -rise_to [get_ports {clk0}] -fall_to port1 -ignore_clock_latency -probe -reset_path

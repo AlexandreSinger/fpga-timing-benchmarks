@@ -1,0 +1,1 @@
+set_false_path -setup -hold -reset_path -from [get_ports clk*] -through xor1 -to port*

@@ -1,0 +1,1 @@
+set_false_path -setup -hold -fall -reset_path -from [get_pins flop_Q] -fall_from [get_ports {clk0}] -through net1 -rise_through [get_pins flop_Q] -fall_through * -to [get_ports clk1] -rise_to [get_clocks {core_clk}]

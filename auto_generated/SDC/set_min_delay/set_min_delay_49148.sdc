@@ -1,0 +1,1 @@
+set_min_delay 30 -rise -fall -rise_from clk2 -fall_from port2 -through net1 -rise_through [get_pins flop_Q] -fall_through {net1, net2} -to {clk1 clk2} -rise_to clk1 -fall_to and1 -ignore_clock_latency -probe -reset_path

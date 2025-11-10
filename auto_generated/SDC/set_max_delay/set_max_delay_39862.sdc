@@ -1,0 +1,1 @@
+set_max_delay 30 -rise -fall -fall_from pin* -rise_through net2 -to [get_ports clk*] -ignore_clock_latency -probe

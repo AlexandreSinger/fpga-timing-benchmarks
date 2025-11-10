@@ -1,0 +1,1 @@
+set_min_delay 4.0 -rise -from xor* -rise_from ff1 -fall_from [get_ports clk*] -through [get_ports {clk0}] -rise_through [get_ports clk*] -fall_through ff1 -to {clk1 clk2} -rise_to [get_pins flop_Q] -probe

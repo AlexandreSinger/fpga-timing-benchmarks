@@ -1,0 +1,1 @@
+set_min_delay 4.0 -rise -rise_from [get_clocks {core_clk}] -fall_from [get_ports {clk0}] -through ff* -rise_through net1 -fall_through xor1 -to * -rise_to [get_pins flop_Q] -fall_to [get_ports clk*] -probe

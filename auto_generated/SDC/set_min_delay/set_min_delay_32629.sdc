@@ -1,0 +1,1 @@
+set_min_delay 10 -fall -from [get_ports clk2] -fall_from port1 -through [get_ports {clk0}] -rise_through net* -fall_through [get_ports clk*] -to * -rise_to * -fall_to xor1 -ignore_clock_latency -probe

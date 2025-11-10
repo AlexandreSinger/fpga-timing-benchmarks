@@ -1,0 +1,1 @@
+set_clock_uncertainty 1 -rise -fall -setup -from clk* -fall_from clk* clk1

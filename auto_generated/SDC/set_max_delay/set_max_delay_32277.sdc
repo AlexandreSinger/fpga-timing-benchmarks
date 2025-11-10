@@ -1,0 +1,1 @@
+set_max_delay 10 -from core_clock -fall_from xor1 -through [get_ports {clk0}] -rise_through ff1 -fall_through ff* -to [get_clocks {core_clk}] -rise_to core_clock -fall_to * -ignore_clock_latency -probe

@@ -1,0 +1,1 @@
+set_multicycle_path 2 -rise -end -from xor* -rise_from [get_ports clk*] -fall_from * -through [get_ports {clk0}] -reset_path

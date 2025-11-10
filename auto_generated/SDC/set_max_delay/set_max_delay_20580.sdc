@@ -1,0 +1,1 @@
+set_max_delay 10 -rise -from and1 -through xor1 -fall_through and1 -to [get_ports clk1] -probe

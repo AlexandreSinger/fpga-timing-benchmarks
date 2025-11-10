@@ -1,0 +1,1 @@
+set_multicycle_path 2 -setup -hold -end -reset_path

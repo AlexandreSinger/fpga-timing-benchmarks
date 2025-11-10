@@ -1,0 +1,1 @@
+set_min_delay 30 -fall -from and1 -rise_from pin* -fall_from xor* -through xor1 -rise_through net2 -fall_through and1 -to xor* -rise_to [get_ports clk*] -fall_to [get_ports clk2] -ignore_clock_latency -probe

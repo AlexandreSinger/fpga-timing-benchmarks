@@ -1,0 +1,1 @@
+set_max_delay 4.0 -rise -from clk* -rise_from pin2 -fall_from adder1 -fall_through pin* -to adder1 -fall_to {clk1 clk2} -ignore_clock_latency -probe

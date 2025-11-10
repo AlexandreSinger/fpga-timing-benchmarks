@@ -1,0 +1,1 @@
+set_min_delay 4.0 -rise -fall -from [get_pins flop_Q] -rise_from [get_ports clk2] -fall_from port2 -through net* -rise_through [get_pins flop_Q] -fall_through adder1 -rise_to [get_ports clk*] -fall_to [get_ports {clk0}] -ignore_clock_latency -reset_path

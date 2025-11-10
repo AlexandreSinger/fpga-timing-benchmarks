@@ -1,0 +1,1 @@
+set_min_delay 30 -rise -fall -from * -rise_from [get_ports {clk0}] -fall_from xor* -rise_through * -fall_through ff* -to [get_clocks {core_clk}] -rise_to {clk1 clk2} -fall_to [get_pins flop_Q] -ignore_clock_latency

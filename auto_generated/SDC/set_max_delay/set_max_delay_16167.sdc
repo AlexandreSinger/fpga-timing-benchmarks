@@ -1,0 +1,1 @@
+set_max_delay 4.0 -rise -from pin2 -rise_from {clk1 clk2} -fall_from [get_clocks {core_clk}] -rise_through {net1, net2} -fall_through xor1 -rise_to adder1 -fall_to and1 -ignore_clock_latency -probe -reset_path

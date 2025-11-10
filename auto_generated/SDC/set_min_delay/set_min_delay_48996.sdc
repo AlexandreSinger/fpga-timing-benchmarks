@@ -1,0 +1,1 @@
+set_min_delay 30 -fall -from pin2 -rise_from [get_clocks {core_clk}] -fall_from clk2 -rise_through [get_ports {clk0}] -fall_through pin1 -to adder1 -rise_to and1 -fall_to ff* -ignore_clock_latency -probe

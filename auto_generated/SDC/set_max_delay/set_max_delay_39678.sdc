@@ -1,0 +1,1 @@
+set_max_delay 30 -rise -fall -rise_from ff* -through adder1 -rise_through pin* -probe -reset_path

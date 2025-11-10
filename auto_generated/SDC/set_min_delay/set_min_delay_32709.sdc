@@ -1,0 +1,1 @@
+set_min_delay 10 -rise -fall -from [get_ports {clk0}] -fall_from [get_clocks {core_clk}] -through {net1, net2} -rise_through xor* -fall_through [get_ports clk1] -to port1 -rise_to * -fall_to core_clock -probe -reset_path

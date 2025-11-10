@@ -1,0 +1,1 @@
+set_min_delay 10 -rise -through ff1 -rise_through * -fall_through net* -to and1 -rise_to [get_ports clk*] -fall_to [get_ports clk*] -ignore_clock_latency -probe -reset_path

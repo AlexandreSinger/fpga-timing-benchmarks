@@ -1,0 +1,1 @@
+set_max_delay 4.0 -rise -fall -from [get_ports clk*] -rise_from [get_clocks {core_clk}] -fall_from ff1 -through [get_pins flop_Q] -fall_through net2 -to port* -rise_to [get_ports clk*] -fall_to pin* -ignore_clock_latency -reset_path

@@ -1,0 +1,1 @@
+set_min_delay 30 -rise -rise_from adder1 -fall_from [get_pins flop_Q] -through pin2 -rise_through pin* -fall_through net* -to [get_ports {clk0}] -rise_to clk1 -fall_to [get_clocks {core_clk}] -reset_path

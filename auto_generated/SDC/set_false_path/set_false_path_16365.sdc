@@ -1,0 +1,1 @@
+set_false_path -hold -rise -fall -from [get_clocks {core_clk}] -rise_from clk1 -fall_from pin2 -through pin1 -rise_through net2 -fall_through ff1 -to clk* -rise_to [get_clocks {core_clk}] -fall_to clk*

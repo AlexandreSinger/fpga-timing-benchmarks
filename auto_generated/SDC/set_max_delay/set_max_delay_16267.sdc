@@ -1,0 +1,1 @@
+set_max_delay 4.0 -from port2 -rise_from [get_ports {clk0}] -fall_from [get_ports {clk0}] -through net2 -rise_through and1 -fall_through [get_ports {clk0}] -to * -rise_to port* -fall_to pin1 -ignore_clock_latency -reset_path

@@ -1,0 +1,1 @@
+set_max_delay 10 -rise -from ff* -rise_from [get_clocks {core_clk}] -fall_to [get_pins flop_Q] -ignore_clock_latency -probe -reset_path

@@ -1,0 +1,1 @@
+set_max_delay 10 -fall -from and1 -rise_from [get_clocks {core_clk}] -fall_from clk2 -through [get_ports clk*] -rise_through and1 -fall_through {net1, net2} -rise_to [get_ports {clk0}] -fall_to clk2 -ignore_clock_latency

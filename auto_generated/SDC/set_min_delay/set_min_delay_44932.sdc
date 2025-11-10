@@ -1,0 +1,1 @@
+set_min_delay 30 -fall -rise_from xor* -fall_from * -rise_through net1 -fall_through ff1 -to pin1 -ignore_clock_latency -reset_path

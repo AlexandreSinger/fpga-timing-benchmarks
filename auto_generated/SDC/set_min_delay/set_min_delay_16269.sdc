@@ -1,0 +1,1 @@
+set_min_delay 4.0 -from * -rise_from xor* -fall_from [get_ports {clk0}] -through * -rise_through {net1, net2} -fall_through * -to [get_ports {clk0}] -rise_to pin1 -ignore_clock_latency -probe -reset_path

@@ -1,0 +1,1 @@
+set_max_delay 30 -from [get_ports {clk0}] -through net2 -rise_through {net1, net2} -fall_through ff* -rise_to * -probe -reset_path

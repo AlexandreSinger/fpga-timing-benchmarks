@@ -1,0 +1,1 @@
+set_min_delay 30 -from [get_ports {clk0}] -rise_from adder1 -rise_through xor1 -fall_through * -to port* -rise_to * -ignore_clock_latency -probe -reset_path

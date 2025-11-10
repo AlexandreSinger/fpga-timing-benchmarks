@@ -1,0 +1,1 @@
+set_max_delay 10 -rise -fall -from pin1 -rise_from xor* -fall_from [get_ports {clk0}] -through pin1 -rise_through [get_ports clk*] -fall_through ff1 -rise_to pin2 -fall_to [get_ports clk1] -probe -reset_path

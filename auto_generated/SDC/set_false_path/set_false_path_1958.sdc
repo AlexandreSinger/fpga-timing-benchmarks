@@ -1,0 +1,1 @@
+set_false_path -setup -fall -through {net1, net2} -rise_through xor* -rise_to [get_ports {clk0}]

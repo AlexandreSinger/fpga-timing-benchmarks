@@ -1,0 +1,1 @@
+set_min_delay 10 -rise -fall -from port* -rise_from xor* -fall_from adder1 -through ff1 -rise_through adder1 -fall_through net2 -rise_to {clk1 clk2} -fall_to [get_ports clk2] -ignore_clock_latency -reset_path

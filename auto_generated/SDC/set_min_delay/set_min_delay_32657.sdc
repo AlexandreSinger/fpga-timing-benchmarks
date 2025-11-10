@@ -1,0 +1,1 @@
+set_min_delay 10 -from port1 -rise_from pin* -fall_from [get_ports {clk0}] -through [get_ports clk1] -fall_through net* -to [get_pins flop_Q] -rise_to pin* -fall_to pin1 -ignore_clock_latency -probe -reset_path

@@ -1,0 +1,1 @@
+set_max_delay 30 -rise -from port2 -rise_from pin1 -fall_from clk* -through net1 -rise_through net* -fall_through ff1 -to ff1 -rise_to [get_clocks {core_clk}] -fall_to clk1 -ignore_clock_latency -reset_path

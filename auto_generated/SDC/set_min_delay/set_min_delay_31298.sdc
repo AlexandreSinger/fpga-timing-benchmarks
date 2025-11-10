@@ -1,0 +1,1 @@
+set_min_delay 10 -rise -fall -from clk2 -rise_from [get_ports clk2] -fall_from [get_ports clk*] -through pin2 -rise_through [get_ports clk1] -fall_through [get_ports {clk0}] -to adder1 -fall_to core_clock

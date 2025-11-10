@@ -1,0 +1,1 @@
+set_multicycle_path 2 -setup -rise_from pin1 -rise_through net2 -fall_through pin2 -rise_to xor1 -fall_to clk1 -reset_path

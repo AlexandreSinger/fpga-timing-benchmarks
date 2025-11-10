@@ -1,0 +1,1 @@
+set_multicycle_path 2 -hold -end -from [get_ports clk2] -through net2 -to ff* -fall_to [get_ports clk1] -reset_path

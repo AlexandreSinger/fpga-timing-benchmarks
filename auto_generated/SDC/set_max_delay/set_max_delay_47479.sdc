@@ -1,0 +1,1 @@
+set_max_delay 30 -from [get_clocks {core_clk}] -rise_from [get_pins flop_Q] -fall_from [get_ports clk1] -through [get_ports clk1] -rise_through xor* -fall_through {net1, net2} -fall_to and1 -probe -reset_path

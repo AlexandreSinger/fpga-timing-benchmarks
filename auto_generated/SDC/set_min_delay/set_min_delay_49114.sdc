@@ -1,0 +1,1 @@
+set_min_delay 30 -rise -from * -rise_from [get_clocks {core_clk}] -fall_from * -through ff* -rise_through * -fall_through * -to pin2 -rise_to [get_ports {clk0}] -fall_to [get_ports {clk0}] -probe -reset_path

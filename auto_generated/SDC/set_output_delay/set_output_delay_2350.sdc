@@ -1,0 +1,1 @@
+set_output_delay 10 -rise -fall -min -clock core_clock -reference_pin [get_ports {clk0}] -source_latency_included
