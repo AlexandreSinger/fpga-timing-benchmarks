@@ -219,7 +219,7 @@ def generate_create_clock():
                     pieces.append(f"-name clk_{period}")
                     
                 if "-waveform" in option_combination:
-                    # FIXME: Do not make this random.
+                    #FIXME: Do not make this random.
                     fall_time = round(random.uniform(0, period/2))
                     rise_time = round(random.uniform(period/2, period))
                     pieces.append(f"-waveform {{{rise_time} {fall_time}}}")
@@ -229,18 +229,13 @@ def generate_create_clock():
 
                 if "pin_list" in option_combination: 
                     #A list of pins driven by the clock
-                    # FIXME: Fix pin redundancy
+                    #FIXME: Fix pin redundancy
                     k = random.randint(1, len(PINS))
                     pin = random.sample(PINS, k)  
                     pin_to_string = " ".join(pin)
                     pieces.append(f"{{{pin_to_string}}}")
 
                 commands.append(" ".join(pieces))
-        
-        # shuffle = pieces[1:]
-        # random.shuffle(shuffle)
-        # pieces[1:] = shuffle
-        # commands.append(" ".join(pieces))
         
     return commands             
 

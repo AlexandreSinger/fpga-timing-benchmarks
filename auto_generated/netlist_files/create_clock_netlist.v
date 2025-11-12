@@ -10,13 +10,30 @@ SDC Example:
 
 
 module create_clock (    
-    input wire clk,
-    input wire pin1, pin2, 
-    input wire in,
+    input wire clk1,
+    input wire clk2,
     output reg out
 );
 
-    always @(*) begin
-        out <= in;
+    //Instance to create pin inputs
+    wire ff_pin_out;
+    module_pin ff_pin(.clk(clk1), .pin1(clk1), .pin2(clk1), .out(clock_pin_out));
+
+
+    //Dummy logic
+    always @(clk1) begin
+        out <= clock_pin_out;
+    end
+endmodule
+
+//Module defining pins
+module module_pin(
+    input wire clk, 
+    input wire pin1,
+    input wire pin2,
+    output reg out
+);
+    always @(posedge clk) begin
+        out <= pin1 | pin2;
     end
 endmodule
