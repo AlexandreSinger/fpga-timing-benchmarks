@@ -1,1 +1,0 @@
-set_max_delay 10 -rise -from [get_clocks {core_clk}] -rise_from * -fall_from clk* -through {net1, net2} -rise_through and1 -fall_through {net1, net2} -to and1 -rise_to clk2 -fall_to and1 -ignore_clock_latency -probe

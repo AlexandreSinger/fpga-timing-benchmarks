@@ -1,1 +1,0 @@
-set_min_delay 4.0 -fall -from clk1 -rise_from {clk1 clk2} -through * -rise_through pin2 -fall_through ff1 -to xor* -rise_to [get_clocks {core_clk}] -fall_to [get_ports clk*] -ignore_clock_latency -probe -reset_path

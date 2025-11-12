@@ -1,1 +1,0 @@
-set_min_delay 4.0 -fall -fall_from clk2 -through [get_ports {clk0}] -fall_through * -fall_to [get_ports clk*] -ignore_clock_latency

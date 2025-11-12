@@ -1,1 +1,0 @@
-set_min_delay 4.0 -fall -from port2 -through * -rise_through pin2 -fall_to adder1 -probe -reset_path

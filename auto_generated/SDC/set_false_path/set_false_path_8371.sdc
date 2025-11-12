@@ -1,1 +1,0 @@
-set_false_path -hold -rise -fall -fall_from [get_ports clk1] -through ff* -fall_through net2 -to *

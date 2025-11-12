@@ -1,1 +1,0 @@
-set_max_delay 10 -fall -fall_from * -through xor1 -fall_through net1 -to port2 -rise_to pin1

@@ -1,1 +1,0 @@
-set_min_delay 10 -rise -fall -from [get_ports clk2] -rise_from xor1 -fall_from * -through xor* -rise_through [get_ports clk1] -fall_through [get_ports {clk0}] -to ff* -rise_to xor1 -fall_to xor* -probe

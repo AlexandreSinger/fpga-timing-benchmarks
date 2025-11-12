@@ -1,1 +1,0 @@
-set_min_delay 30 -rise -from clk* -rise_from [get_ports clk2] -fall_from * -rise_through [get_pins flop_Q] -fall_through [get_pins flop_Q] -to [get_ports {clk0}] -fall_to [get_ports {clk0}] -reset_path

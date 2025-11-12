@@ -1,1 +1,0 @@
-set_multicycle_path 2 -setup -hold -rise -end -rise_through adder1 -to * -rise_to xor1 -fall_to [get_ports clk*]

@@ -1,1 +1,0 @@
-set_clock_uncertainty 0.5 -rise -setup -hold -from * -rise_from [get_clocks {core_clk}] -fall_from * -to clk2 -fall_to clk1 {clk1 clk2}

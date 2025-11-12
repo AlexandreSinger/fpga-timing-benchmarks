@@ -1,1 +1,0 @@
-set_false_path -setup -hold -fall -reset_path -from [get_pins flop_Q] -rise_from xor* -through * -rise_to adder1 -fall_to *

@@ -1,1 +1,0 @@
-set_false_path -setup -hold -rise -from [get_pins flop_Q] -rise_from [get_clocks {core_clk}] -fall_from pin2 -through {net1, net2} -to pin* -rise_to xor*

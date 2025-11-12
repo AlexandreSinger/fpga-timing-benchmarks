@@ -1,1 +1,0 @@
-set_false_path -setup -rise -fall -reset_path -from [get_ports {clk0}] -rise_from [get_clocks {core_clk}] -fall_from xor* -through net*

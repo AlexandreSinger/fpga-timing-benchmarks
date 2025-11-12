@@ -1,1 +1,0 @@
-set_max_delay 4.0 -rise -from port2 -rise_from xor* -fall_from [get_clocks {core_clk}] -rise_through [get_ports {clk0}] -to {clk1 clk2} -fall_to xor* -reset_path

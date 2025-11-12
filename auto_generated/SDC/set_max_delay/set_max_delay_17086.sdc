@@ -1,1 +1,0 @@
-set_max_delay 10 -rise -rise_through * -fall_through adder1 -fall_to xor*

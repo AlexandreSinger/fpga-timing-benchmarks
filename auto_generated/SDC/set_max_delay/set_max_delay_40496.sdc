@@ -1,1 +1,0 @@
-set_max_delay 30 -rise -from {clk1 clk2} -to port* -fall_to xor* -ignore_clock_latency -probe -reset_path

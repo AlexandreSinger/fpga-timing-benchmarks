@@ -1,1 +1,0 @@
-set_max_delay 10 -rise -fall -from * -rise_from [get_ports {clk0}] -fall_from clk* -rise_through [get_ports clk1] -fall_through net* -rise_to pin* -fall_to [get_ports clk*]

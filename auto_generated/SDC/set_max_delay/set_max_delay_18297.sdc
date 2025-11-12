@@ -1,1 +1,0 @@
-set_max_delay 10 -rise -rise_from port* -through {net1, net2} -rise_to [get_ports clk*] -reset_path

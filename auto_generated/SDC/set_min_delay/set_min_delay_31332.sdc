@@ -1,1 +1,0 @@
-set_min_delay 10 -rise -fall -from pin1 -rise_from [get_clocks {core_clk}] -fall_from port2 -through [get_ports clk*] -fall_through * -to [get_clocks {core_clk}] -rise_to [get_ports {clk0}] -fall_to port1

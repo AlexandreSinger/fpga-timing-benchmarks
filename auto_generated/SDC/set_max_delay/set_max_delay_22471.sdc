@@ -1,1 +1,0 @@
-set_max_delay 10 -rise_from [get_clocks {core_clk}] -fall_from port2 -rise_through net1 -to clk2 -rise_to [get_pins flop_Q] -probe

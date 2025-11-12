@@ -1,1 +1,0 @@
-set_min_delay 10 -fall -rise_from [get_ports clk*] -fall_from [get_clocks {core_clk}] -to clk1 -fall_to xor* -reset_path

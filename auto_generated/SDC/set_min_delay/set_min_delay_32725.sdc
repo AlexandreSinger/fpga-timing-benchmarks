@@ -1,1 +1,0 @@
-set_min_delay 10 -rise -fall -rise_from [get_pins flop_Q] -fall_from [get_ports clk2] -rise_through adder1 -fall_through [get_pins flop_Q] -to [get_ports clk1] -rise_to ff* -fall_to [get_pins flop_Q] -ignore_clock_latency -probe -reset_path

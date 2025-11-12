@@ -1,1 +1,0 @@
-set_min_delay 10 -rise -fall -from pin1 -rise_from [get_clocks {core_clk}] -rise_through and1 -fall_through and1 -to [get_pins flop_Q] -rise_to ff1 -fall_to {clk1 clk2} -ignore_clock_latency -reset_path

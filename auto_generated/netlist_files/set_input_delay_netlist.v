@@ -1,44 +1,55 @@
 /*
-Input: clock_list, ref_pin??
-
-ref_pin: Specifies the input delay with respect to edge of a clock appearing at a pin/port rather than a clock
-port_pin_list: The list of pin/ports the delay value will be assigned. get_ports in1 이어도 in1이라는 새로운 모듈이 필요한게 아니라 in1이라는 포트만 있으면 됨 
-DO WE NEED TO HAVE GET_PORTS IN THE PIN/PORT LIST WHEN WE ALSO TEST GET_VARIANTS SEPARATELY? 
-대부분 예시에서 port_pin_list를 할 때 string보다는 get_ports 를 쓰는데, 벤치마크에서는 어떻게 할 것인가.. 
-
+Command: set_input_delay
+Description:
+    -inputs can be a port of the main module or a pin of the instance of 'module_pin'
+    -"-reference_pin ref_pin" refers to the clock that arrives at 'ref_pin', in this case ref_pin = ff_ref/clk
+SDC Example:
+    set_input_delay 4.0 -clock src_clk [get_ports port2]
+    set_input_delay 10 -reference_pin ff_ref/clk port1
 */
-clock, ref_pin, port_pin_list
 
-//set_input_delay 
-
+//Main module
 module set_input_delay (
-    input wire clk1,
-    input wire clk2, 
-    input wire pin1, 
-    input wire pin2,
+    input wire src_clk,
     input wire port1, 
     input wire port2,
     output reg out
 );
+    
+    //Instance to create 'ref_pin' (ff_ref/clk)
+    wire ff_ref_q;
+    FF ff_ref (.clk(src_clk), .D(port1), .Q(ff_ref_q));
 
-reference_pin = FF_Q
-    //For -reference_pin
-    reg FF_Q;
-    always @(posedge clk1) begin
-        FF_Q <= ~clk1
-    end
+    //Instance to create pin inputs (ff_pin/pin1 and ff_pin/pin2)
+    wire ff_pin_out;
+    module_pin ff_pin (.clk(src_clk), .pin1(port1), .pin2(port2), .out(ff_pin_out));
 
-    //For data
-    always @(posedge clk2) begin
-        data1 <= pin1 & pin2
-    end
-
-    always @(posedge clk 2) begin
-        data2 <= port1 | port2
-    end
-
-    always @(*) begin
-       out = data1 & data2 
+    //Dummy logic
+    always @(posedge src_clk) begin
+        out <= port1 | port2;
     end
 
 endmodule 
+
+//Module defining reference pin
+module FF(
+    input wire clk,
+    input wire D,
+    output reg Q
+);
+    always @(posedge clk) begin
+        Q <= D;
+    end
+endmodule 
+
+//Module defining pins
+module module_pin(
+    input wire clk, 
+    input wire pin1,
+    input wire pin2,
+    output reg out
+);
+    always @(posedge clk) begin
+        out <= pin1 & pin2;
+    end
+endmodule

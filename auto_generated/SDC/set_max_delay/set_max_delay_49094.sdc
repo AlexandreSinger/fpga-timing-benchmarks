@@ -1,1 +1,0 @@
-set_max_delay 30 -rise -fall -from ff* -fall_from ff* -through [get_pins flop_Q] -rise_through [get_ports {clk0}] -fall_through [get_ports clk*] -to pin2 -rise_to [get_ports clk2] -ignore_clock_latency -probe -reset_path

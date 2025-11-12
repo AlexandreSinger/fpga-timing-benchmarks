@@ -1,1 +1,0 @@
-set_clock_uncertainty 0.2 -rise -fall -setup -hold -fall_from clk* -to clk1 -fall_to * pin1

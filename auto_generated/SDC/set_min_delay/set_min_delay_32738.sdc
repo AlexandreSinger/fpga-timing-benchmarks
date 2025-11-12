@@ -1,1 +1,0 @@
-set_min_delay 10 -rise -from [get_clocks {core_clk}] -fall_from * -through xor* -rise_through xor* -fall_through ff1 -to [get_pins flop_Q] -rise_to [get_clocks {core_clk}] -fall_to [get_clocks {core_clk}] -ignore_clock_latency -probe -reset_path

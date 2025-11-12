@@ -1,1 +1,0 @@
-set_max_delay 30 -rise -fall -rise_from [get_pins flop_Q] -fall_from clk* -through pin1 -rise_through [get_pins flop_Q] -rise_to and1 -fall_to [get_pins flop_Q] -ignore_clock_latency -probe -reset_path

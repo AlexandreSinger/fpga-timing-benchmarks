@@ -1,1 +1,0 @@
-set_max_delay 4.0 -fall -rise_from {clk1 clk2} -fall_from [get_ports clk1] -through net2 -rise_through [get_pins flop_Q] -fall_through adder1 -to core_clock -fall_to [get_ports clk2] -ignore_clock_latency -reset_path

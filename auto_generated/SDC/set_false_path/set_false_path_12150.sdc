@@ -1,1 +1,0 @@
-set_false_path -hold -fall -reset_path -from [get_ports {clk0}] -through xor1 -to [get_ports clk2] -rise_to [get_ports {clk0}] -fall_to xor*

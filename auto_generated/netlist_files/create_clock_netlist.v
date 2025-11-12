@@ -1,14 +1,22 @@
-#simple flip flop
+/*
+Command: create_clock
+Description:
+    -inputs specified in: PIN_LIST
+    -The clock specified by the command drives the pins of this module
+SDC Example:
+    create_clock -period 5 -name ext_clk pin1
+    create_clock -period 10 [get_pins pin1]
+*/
 
-module simple_ff (    
-    input wire clk, clk1, clk2, 
-    input wire pin1, pin2, pin3,
-    input wire flop_Q,
-    input wire muxOut
+
+module create_clock (    
+    input wire clk,
+    input wire pin1, pin2, 
     input wire in,
     output reg out
 );
 
-always @(posedge clk or posedge clk1 or posedge clk2 or posedge clk3) begin
-    out <= in;
-end
+    always @(*) begin
+        out <= in;
+    end
+endmodule

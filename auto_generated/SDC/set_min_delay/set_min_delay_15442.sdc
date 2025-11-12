@@ -1,1 +1,0 @@
-set_min_delay 4.0 -rise -from [get_ports clk2] -rise_from [get_ports {clk0}] -fall_from [get_ports clk*] -through ff1 -rise_through [get_ports {clk0}] -fall_to pin* -ignore_clock_latency -probe -reset_path

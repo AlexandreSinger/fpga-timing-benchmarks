@@ -1,1 +1,0 @@
-set_max_delay 30 -from [get_ports clk2] -rise_from core_clock -fall_from xor1 -through [get_ports clk1] -rise_through [get_ports clk1] -to [get_clocks {core_clk}] -rise_to port1 -ignore_clock_latency -probe

@@ -1,1 +1,0 @@
-set_max_delay 10 -fall -fall_from clk1 -rise_through xor* -to * -rise_to *

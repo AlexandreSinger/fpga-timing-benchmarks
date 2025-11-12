@@ -1,1 +1,0 @@
-set_min_delay 4.0 -rise -from xor1 -rise_from port1 -fall_from [get_ports clk*] -through and1 -rise_through [get_pins flop_Q] -fall_through adder1 -to port1 -fall_to [get_pins flop_Q] -ignore_clock_latency -probe

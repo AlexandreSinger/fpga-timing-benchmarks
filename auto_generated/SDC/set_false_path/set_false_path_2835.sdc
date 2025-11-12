@@ -1,1 +1,0 @@
-set_false_path -rise -reset_path -rise_from * -through ff1 -rise_through ff*

@@ -1,1 +1,0 @@
-set_min_delay 10 -rise -rise_from clk2 -fall_from and1 -through pin2 -rise_through [get_pins flop_Q] -fall_through pin1 -to [get_clocks {core_clk}] -rise_to [get_ports {clk0}] -fall_to [get_pins flop_Q] -probe

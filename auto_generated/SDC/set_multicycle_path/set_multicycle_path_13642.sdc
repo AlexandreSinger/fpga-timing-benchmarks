@@ -1,1 +1,0 @@
-set_multicycle_path 2 -fall -end -rise_from * -fall_through net2 -fall_to port2 -reset_path

@@ -1,1 +1,0 @@
-set_false_path -setup -hold -fall -reset_path -rise_from [get_ports clk*] -fall_from ff* -through * -fall_through * -fall_to [get_ports clk*]

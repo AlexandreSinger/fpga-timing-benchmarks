@@ -1,1 +1,0 @@
-set_max_delay 30 -rise -rise_from adder1 -through xor* -to pin1 -rise_to [get_ports clk*]

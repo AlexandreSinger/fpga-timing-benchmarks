@@ -1,1 +1,0 @@
-set_max_delay 10 -from adder1 -rise_from [get_ports clk*] -fall_from [get_pins flop_Q] -through ff* -rise_through net1 -fall_through adder1 -rise_to * -fall_to adder1 -ignore_clock_latency -reset_path

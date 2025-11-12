@@ -1,1 +1,0 @@
-set_min_delay 30 -rise -fall -from * -fall_from [get_ports clk*] -through and1 -rise_through [get_ports clk*] -fall_through {net1, net2} -to * -rise_to {clk1 clk2} -fall_to adder1 -ignore_clock_latency

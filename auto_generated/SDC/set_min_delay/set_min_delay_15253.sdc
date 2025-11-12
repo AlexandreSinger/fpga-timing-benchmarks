@@ -1,1 +1,0 @@
-set_min_delay 4.0 -rise -fall -rise_from pin* -fall_from [get_pins flop_Q] -through [get_ports clk1] -rise_through {net1, net2} -fall_through {net1, net2} -rise_to pin* -fall_to [get_ports {clk0}] -ignore_clock_latency

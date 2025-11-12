@@ -1,1 +1,0 @@
-set_max_delay 10 -fall -rise_from xor* -fall_from ff* -through [get_pins flop_Q] -rise_through pin1 -fall_through [get_pins flop_Q] -to core_clock -rise_to [get_clocks {core_clk}] -fall_to adder1 -probe

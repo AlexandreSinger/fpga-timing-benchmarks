@@ -1,1 +1,0 @@
-set_max_delay 30 -rise -from [get_ports clk*] -rise_from adder1 -fall_from clk1 -through net* -rise_through [get_ports {clk0}] -fall_through net* -rise_to clk* -ignore_clock_latency -probe -reset_path

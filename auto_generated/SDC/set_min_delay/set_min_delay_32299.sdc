@@ -1,1 +1,0 @@
-set_min_delay 10 -rise -fall -from [get_ports clk2] -rise_from port2 -fall_from * -through [get_ports {clk0}] -rise_through * -fall_through net* -to [get_ports clk*] -rise_to core_clock -ignore_clock_latency

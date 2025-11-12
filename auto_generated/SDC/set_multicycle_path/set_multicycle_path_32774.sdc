@@ -1,1 +1,0 @@
-set_multicycle_path 2 -hold -rise -fall -start -end -from clk1 -rise_from pin* -fall_to pin1

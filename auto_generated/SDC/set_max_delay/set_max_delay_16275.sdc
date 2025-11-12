@@ -1,1 +1,0 @@
-set_max_delay 4.0 -from {clk1 clk2} -rise_from {clk1 clk2} -through * -rise_through [get_ports clk1] -fall_through and1 -to [get_ports {clk0}] -rise_to core_clock -fall_to [get_ports {clk0}] -ignore_clock_latency -probe -reset_path

@@ -1,1 +1,0 @@
-set_max_delay 10 -fall -rise_from ff1 -through {net1, net2} -rise_through [get_ports clk*] -fall_through adder1 -to [get_ports {clk0}] -rise_to [get_clocks {core_clk}] -fall_to * -ignore_clock_latency

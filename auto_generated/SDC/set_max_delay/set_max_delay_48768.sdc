@@ -1,1 +1,0 @@
-set_max_delay 30 -rise -fall -from [get_ports clk2] -rise_from ff1 -through pin2 -rise_through and1 -fall_through {net1, net2} -to [get_clocks {core_clk}] -rise_to [get_ports clk2] -fall_to * -reset_path

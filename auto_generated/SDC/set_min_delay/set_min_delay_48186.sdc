@@ -1,1 +1,0 @@
-set_min_delay 30 -rise -from pin2 -rise_from port1 -fall_from [get_clocks {core_clk}] -through pin2 -rise_through net1 -fall_through {net1, net2} -rise_to core_clock -fall_to [get_clocks {core_clk}] -ignore_clock_latency

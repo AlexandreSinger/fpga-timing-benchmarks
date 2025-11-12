@@ -1,1 +1,0 @@
-set_max_delay 4.0 -rise -from xor1 -rise_from [get_clocks {core_clk}] -through ff* -rise_through net1 -fall_through adder1 -to ff1 -rise_to * -fall_to [get_ports {clk0}] -ignore_clock_latency -reset_path

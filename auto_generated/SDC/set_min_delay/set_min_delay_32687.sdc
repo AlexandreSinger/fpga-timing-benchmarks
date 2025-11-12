@@ -1,1 +1,0 @@
-set_min_delay 10 -rise -fall -from core_clock -rise_from [get_pins flop_Q] -fall_from [get_ports {clk0}] -through [get_ports clk1] -fall_through xor1 -to pin* -fall_to port1 -ignore_clock_latency -probe -reset_path

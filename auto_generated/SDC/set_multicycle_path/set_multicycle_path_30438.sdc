@@ -1,1 +1,0 @@
-set_multicycle_path 2 -setup -rise -start -from {clk1 clk2} -through net2 -rise_through pin2 -fall_to [get_ports clk1] -reset_path

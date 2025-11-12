@@ -1,1 +1,0 @@
-set_min_delay 4.0 -rise -fall -from port1 -fall_from port1 -through * -rise_through * -fall_through * -to core_clock -rise_to [get_clocks {core_clk}] -fall_to xor* -ignore_clock_latency -probe -reset_path

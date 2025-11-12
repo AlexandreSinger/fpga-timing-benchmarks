@@ -1,1 +1,0 @@
-set_max_delay 10 -rise -from [get_clocks {core_clk}] -rise_from [get_ports clk2] -fall_from core_clock -through ff1 -rise_through and1 -fall_through [get_ports clk*] -fall_to ff1 -ignore_clock_latency -probe

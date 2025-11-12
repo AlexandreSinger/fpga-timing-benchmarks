@@ -1,1 +1,0 @@
-set_min_delay 10 -rise -fall -from [get_ports {clk0}] -rise_from [get_ports clk2] -fall_from [get_ports {clk0}] -rise_through ff* -fall_through net1 -to clk1 -rise_to [get_clocks {core_clk}] -fall_to and1 -probe

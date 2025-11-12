@@ -1,1 +1,0 @@
-set_false_path -hold -rise -reset_path -from [get_pins flop_Q] -rise_from core_clock -fall_from * -through xor1 -rise_through [get_ports clk1] -fall_through net* -to adder1 -rise_to pin* -fall_to xor*

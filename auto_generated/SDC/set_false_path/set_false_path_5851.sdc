@@ -1,1 +1,0 @@
-set_false_path -rise -reset_path -rise_from [get_ports {clk0}] -fall_through * -rise_to and1 -fall_to *

@@ -1,1 +1,0 @@
-set_output_delay 30 -fall -max -min -reference_pin [get_pins flop_Q] -network_latency_included -add_delay

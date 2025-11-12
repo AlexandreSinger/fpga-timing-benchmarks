@@ -1,1 +1,0 @@
-set_max_delay 10 -fall_from [get_ports {clk0}] -fall_through {net1, net2} -to [get_ports {clk0}] -fall_to core_clock -reset_path

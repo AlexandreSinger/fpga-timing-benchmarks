@@ -1,1 +1,0 @@
-set_max_delay 4.0 -fall -from [get_clocks {core_clk}] -fall_from [get_ports {clk0}] -fall_through [get_ports clk*] -to [get_clocks {core_clk}] -ignore_clock_latency

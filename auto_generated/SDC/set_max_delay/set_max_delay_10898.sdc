@@ -1,1 +1,0 @@
-set_max_delay 4.0 -rise -from [get_ports clk1] -rise_from ff1 -fall_from * -rise_through [get_ports {clk0}] -fall_through pin2 -fall_to port* -probe

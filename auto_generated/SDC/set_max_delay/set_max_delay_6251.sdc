@@ -1,1 +1,0 @@
-set_max_delay 4.0 -rise_from xor* -fall_through [get_ports clk1] -to xor1 -fall_to and1 -ignore_clock_latency -probe

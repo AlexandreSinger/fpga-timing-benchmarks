@@ -1,1 +1,0 @@
-set_min_delay 10 -rise_from [get_pins flop_Q] -to clk* -rise_to [get_pins flop_Q] -probe

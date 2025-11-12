@@ -1,1 +1,0 @@
-set_max_delay 10 -rise -fall -from pin* -rise_from [get_clocks {core_clk}] -fall_from core_clock -through xor* -rise_through {net1, net2} -fall_through adder1 -rise_to xor1 -fall_to [get_ports clk2] -ignore_clock_latency -probe -reset_path

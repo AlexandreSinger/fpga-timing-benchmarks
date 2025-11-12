@@ -1,1 +1,0 @@
-set_min_delay 4.0 -fall -from [get_ports {clk0}] -rise_from xor* -to port* -fall_to ff*

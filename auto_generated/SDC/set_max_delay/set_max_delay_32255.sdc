@@ -1,1 +1,0 @@
-set_max_delay 10 -from [get_ports {clk0}] -rise_from clk2 -fall_from [get_clocks {core_clk}] -through {net1, net2} -fall_through pin1 -to core_clock -rise_to [get_ports {clk0}] -fall_to clk2 -probe -reset_path

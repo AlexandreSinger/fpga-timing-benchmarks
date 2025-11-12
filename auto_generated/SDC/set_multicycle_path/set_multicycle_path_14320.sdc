@@ -1,1 +1,0 @@
-set_multicycle_path 2 -start -rise_from ff* -fall_from port2 -rise_through {net1, net2} -fall_through [get_ports clk*] -to ff1

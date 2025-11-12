@@ -1,1 +1,0 @@
-set_max_delay 10 -rise -fall -from core_clock -rise_from clk1 -fall_from ff* -through * -rise_through net* -fall_through net* -to {clk1 clk2} -rise_to [get_ports clk*] -fall_to [get_ports clk1] -probe

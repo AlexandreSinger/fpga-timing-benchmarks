@@ -1,1 +1,0 @@
-set_false_path -setup -hold -fall -rise_from * -through [get_pins flop_Q] -to *

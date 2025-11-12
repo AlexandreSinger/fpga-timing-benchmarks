@@ -1,1 +1,0 @@
-set_max_delay 10 -rise -fall -from adder1 -rise_from [get_ports clk2] -fall_from clk1 -rise_through [get_pins flop_Q] -to [get_ports clk1] -rise_to xor1 -fall_to [get_ports clk1] -ignore_clock_latency -probe

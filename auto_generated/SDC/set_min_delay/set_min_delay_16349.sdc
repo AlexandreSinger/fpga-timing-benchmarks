@@ -1,1 +1,0 @@
-set_min_delay 4.0 -rise -from [get_ports {clk0}] -rise_from * -fall_from * -through net* -rise_through {net1, net2} -fall_through ff* -rise_to clk* -fall_to ff* -ignore_clock_latency -probe -reset_path

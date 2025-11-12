@@ -1,1 +1,0 @@
-set_min_delay 10 -fall -from [get_pins flop_Q] -rise_from [get_pins flop_Q] -fall_from [get_ports {clk0}] -through net* -fall_to * -probe

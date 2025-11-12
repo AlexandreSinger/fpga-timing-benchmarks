@@ -1,1 +1,0 @@
-set_max_delay 30 -from * -rise_from and1 -fall_from [get_ports clk*] -through [get_ports {clk0}] -rise_through net2 -fall_through [get_ports {clk0}] -to pin* -rise_to [get_ports {clk0}] -probe -reset_path

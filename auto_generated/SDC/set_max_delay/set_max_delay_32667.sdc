@@ -1,1 +1,0 @@
-set_max_delay 10 -rise -fall -from xor1 -rise_from xor* -fall_from [get_clocks {core_clk}] -through ff* -rise_through [get_ports clk1] -fall_through net1 -to * -rise_to [get_ports clk2] -probe -reset_path

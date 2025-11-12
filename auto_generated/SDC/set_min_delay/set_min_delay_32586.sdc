@@ -1,1 +1,0 @@
-set_min_delay 10 -fall -from pin2 -rise_from [get_ports {clk0}] -fall_from pin2 -through [get_ports clk*] -rise_through * -fall_through net2 -to ff* -rise_to clk* -fall_to [get_ports {clk0}] -reset_path

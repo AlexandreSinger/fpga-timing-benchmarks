@@ -1,1 +1,0 @@
-set_max_delay 30 -fall -from [get_clocks {core_clk}] -rise_from core_clock -fall_from * -through pin* -fall_through [get_ports clk1] -to pin* -rise_to pin* -fall_to [get_ports {clk0}] -probe -reset_path

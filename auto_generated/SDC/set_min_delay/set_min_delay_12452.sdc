@@ -1,1 +1,0 @@
-set_min_delay 4.0 -from [get_ports clk*] -rise_from [get_ports clk2] -fall_from pin1 -through [get_ports clk*] -fall_through [get_ports {clk0}] -to {clk1 clk2} -rise_to [get_clocks {core_clk}] -ignore_clock_latency

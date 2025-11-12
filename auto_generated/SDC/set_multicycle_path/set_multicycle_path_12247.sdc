@@ -1,1 +1,0 @@
-set_multicycle_path 2 -rise -fall -from xor1 -rise_through [get_pins flop_Q] -rise_to xor* -reset_path

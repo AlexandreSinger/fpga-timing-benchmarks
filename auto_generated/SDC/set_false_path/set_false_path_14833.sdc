@@ -1,1 +1,0 @@
-set_false_path -rise -reset_path -from * -rise_from * -rise_through [get_ports {clk0}] -fall_through and1 -to pin* -rise_to * -fall_to clk*

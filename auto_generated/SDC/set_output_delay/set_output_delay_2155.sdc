@@ -1,1 +1,0 @@
-set_output_delay 10 -fall -max -reference_pin [get_ports clk1] -source_latency_included pin2

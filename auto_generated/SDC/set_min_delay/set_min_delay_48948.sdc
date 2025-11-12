@@ -1,1 +1,0 @@
-set_min_delay 30 -rise -from pin1 -fall_from xor1 -through * -rise_through * -fall_through [get_ports {clk0}] -to adder1 -rise_to [get_ports clk*] -fall_to core_clock -ignore_clock_latency -reset_path

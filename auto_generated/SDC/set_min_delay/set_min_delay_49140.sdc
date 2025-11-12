@@ -1,1 +1,0 @@
-set_min_delay 30 -rise -fall -from adder1 -rise_from ff* -fall_from * -through * -rise_through {net1, net2} -fall_through [get_pins flop_Q] -to clk2 -rise_to xor1 -ignore_clock_latency -probe -reset_path

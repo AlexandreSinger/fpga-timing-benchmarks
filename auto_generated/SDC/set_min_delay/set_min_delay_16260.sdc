@@ -1,1 +1,0 @@
-set_min_delay 4.0 -fall -rise_from clk2 -fall_from [get_ports {clk0}] -through [get_ports {clk0}] -rise_through adder1 -fall_through net2 -rise_to xor* -fall_to ff1 -ignore_clock_latency -probe -reset_path

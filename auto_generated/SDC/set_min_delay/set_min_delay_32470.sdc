@@ -1,1 +1,0 @@
-set_min_delay 10 -rise -fall -rise_from [get_pins flop_Q] -fall_from xor1 -through net* -rise_through {net1, net2} -fall_through pin2 -to [get_ports clk2] -fall_to port2 -ignore_clock_latency -reset_path

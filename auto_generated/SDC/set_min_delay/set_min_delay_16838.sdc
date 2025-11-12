@@ -1,1 +1,0 @@
-set_min_delay 10 -to * -fall_to [get_ports clk*] -ignore_clock_latency

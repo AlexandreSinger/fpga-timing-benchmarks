@@ -1,1 +1,0 @@
-set_max_delay 30 -fall -rise_from [get_ports {clk0}] -to xor* -rise_to clk1 -fall_to pin* -ignore_clock_latency -reset_path

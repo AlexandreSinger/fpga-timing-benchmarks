@@ -1,1 +1,0 @@
-set_min_delay 30 -from adder1 -rise_from [get_ports clk*] -fall_from port2 -rise_through [get_pins flop_Q] -to [get_pins flop_Q] -rise_to [get_ports clk*] -fall_to port1 -ignore_clock_latency -reset_path

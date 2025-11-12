@@ -1,1 +1,0 @@
-set_false_path -rise -fall -from [get_ports {clk0}] -rise_from clk1 -fall_from and1 -through pin2 -rise_through [get_ports clk*] -fall_through [get_ports clk1] -rise_to [get_ports clk*] -fall_to {clk1 clk2}

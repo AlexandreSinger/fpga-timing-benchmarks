@@ -1,1 +1,0 @@
-set_min_delay 4.0 -fall -fall_through xor1 -to core_clock -fall_to pin2 -probe

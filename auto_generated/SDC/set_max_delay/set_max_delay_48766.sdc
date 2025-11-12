@@ -1,1 +1,0 @@
-set_max_delay 30 -rise -fall -from {clk1 clk2} -rise_from and1 -through [get_ports clk*] -rise_through pin2 -fall_through pin1 -to [get_ports {clk0}] -rise_to pin1 -fall_to {clk1 clk2} -ignore_clock_latency

@@ -20,21 +20,22 @@ TODO
 script_dir_path = os.path.dirname(os.path.realpath(__file__))
 parent_dir = os.path.dirname(script_dir_path)
 intermediate_dir = os.path.join(parent_dir, "auto_generated", "SDC")
+temp_output_path = os.path.join(script_dir_path, "outputs")
 
 #PARAMETERS
 ##################################################################################################################################################
 
-#각 리스트마다 3개 정도로 줄이자. 
 PERIODS = [2, 5, 10]
-PINS = ["*", "pin1", "pin2", "pin*", "[get_ports {clk0}]", "[get_ports clk*]", "[get_ports clk1]", "[get_pins flop_Q]"] 
+#TODO: Can the pins be an output pin? -> It depends on the command, but we can instantiate different modules for each command
+PINS = ["*", "ff_pin/pin1", "ff_pin/pin2", "ff_pin/*", "[get_pins {pin1}]", "[get_pins ff_pin/*]", "[get_pins ff_pin/pin1]"] 
 NETS = ["*", "net1", "net2", "net*", "{net1, net2}"]
 CELLS = ["cell1", "cell2", "cell*"]
 INSTANCES = ["xor1", "and1", "ff1", "adder1", "xor*", "*", "ff*"]
 DELAYS = [4.0, 10, 30]
-PORTS = ["*", "[get_ports {clk0}]", "[get_ports clk2]", "port1", "port2", "port*", "[get_ports clk*]"]
-CLOCKS = ["*", "clk1", "clk2", "clk*", "core_clock", "[get_clocks {core_clk}]", "{clk1 clk2}"] 
+PORTS = ["*", "[get_ports {port1}]", "[get_ports port2]", "port1", "port2", "port*", "[get_ports port*]"]
+CLOCKS = ["*", "clk1", "clk2", "clk*", "[get_clocks {clk1}]", "[get_clocks clk2]", "{clk1}"] 
 FILTER_VAL = []
-SEPARATOR = ["", "/", ".", "_", "|"]
+SEPARATOR = ["/", ".", "|"]
 CELL_INSTANCES = ["*", "reg*", "inst*", "buff*", "reg1", "inst1", "buff1", "inv1", "u1"]
 UNCERTAINTIES = [0.1, 1, 0.5, 0.2]
 DIVISORS = [2, 4, 5]
@@ -215,7 +216,7 @@ def generate_create_clock():
                 pieces = [f"create_clock -period {period}"]
                 
                 if "-name" in option_combination:
-                    pieces.append(f"-name clk{period}")
+                    pieces.append(f"-name clk_{period}")
                     
                 if "-waveform" in option_combination:
                     # FIXME: Do not make this random.
@@ -228,7 +229,7 @@ def generate_create_clock():
 
                 if "pin_list" in option_combination: 
                     #A list of pins driven by the clock
-                    # FIXME: Do not make this random.
+                    # FIXME: Fix pin redundancy
                     k = random.randint(1, len(PINS))
                     pin = random.sample(PINS, k)  
                     pin_to_string = " ".join(pin)
@@ -405,10 +406,6 @@ def generate_set_input_delay():
         for j in range(len(optional_options) + 1):
             for option_combination in combinations(optional_options, j):
             
-                #Constraint: -clock_fall is only valid with -clock
-                if "-clock_fall" in option_combination and "-clock" not in option_combination:
-                    continue
-            
                 #Delay value required
                 pieces = [f"set_input_delay", f"{delay}"]
 
@@ -425,18 +422,15 @@ def generate_set_input_delay():
                     pieces.append("-min")
 
                 if "-clock" in option_combination:
-                    #FIXME: Do not make this random.
-                    clk = random.choice(CLOCKS)
-                    pieces.append(f"-clock {clk}")
+                    #TODO: Might be [get_clocks src_clk] ?
+                    pieces.append(f"-clock src_clk")
 
                 if "-clock_fall" in option_combination:
-                    #Only added if -clock is also present
                     pieces.append("-clock_fall")
                     
                 if "-reference_pin" in option_combination:
-                    #FIXME: Do not make this random.
-                    ref_pin = random.choice(PINS)
-                    pieces.append(f"-reference_pin {ref_pin}")
+                    #TODO: Might be [get_pins ff_inst/clk]
+                    pieces.append(f"-reference_pin ff_ref/clk")
                     
                 if "-source_latency_included" in option_combination:
                     pieces.append("-source_latency_included")
@@ -452,7 +446,12 @@ def generate_set_input_delay():
                     pin_port_list = random.choice(PINS + PORTS)
                     pieces.append(pin_port_list)
 
-                commands.append(" ".join(pieces))
+                #Join the options to create a proper command
+                pieces = " ".join(pieces)
+                #Add create_clock prerequisites
+                pieces = ("create_clock -period 10 -name src_clk [get_ports src_clk]\n"
+                          + pieces)
+                commands.append(pieces)
     
     return commands
 
@@ -467,10 +466,6 @@ def generate_set_output_delay():
         
         for j in range(len(optional_options) + 1):
             for option_combination in combinations(optional_options, j):
-                
-                #Constraint: -clock_fall is only valid with -clock
-                if "-clock_fall" in option_combination and "-clock" not in option_combination:
-                    continue
 
                 #Delay value required
                 pieces = [f"set_output_delay", f"{delay}"] 
@@ -488,17 +483,16 @@ def generate_set_output_delay():
                     pieces.append("-min")
 
                 if "-clock" in option_combination:
-                    #FIXME: Do not make this random.
+                    #TODO: Might be [get_clocks src_clk]
                     clk = random.choice(CLOCKS)
-                    pieces.append(f"-clock {clk}")
+                    pieces.append(f"-clock src_clk")
 
                 if "-clock_fall" in option_combination:
                     pieces.append("-clock_fall")
                     
                 if "-reference_pin" in option_combination:
-                    #FIXME: Do not make this random.
-                    ref_pin = random.choice(PINS)
-                    pieces.append(f"-reference_pin {ref_pin}")
+                    #TODO: Might be [get_pins ff_inst/clk]
+                    pieces.append(f"-reference_pin ff_ref/clk") 
                     
                 if "-source_latency_included" in option_combination:
                     pieces.append("-source_latency_included")
@@ -514,7 +508,12 @@ def generate_set_output_delay():
                     pin_port_list = random.choice(PINS + PORTS)
                     pieces.append(pin_port_list)
 
-                commands.append(" ".join(pieces))
+                #Join the options to create a proper command
+                pieces = " ".join(pieces)
+                #Add create_clock prerequisites
+                pieces = ("create_clock -period 10 -name src_clk [get_ports src_clk]\n"
+                          + pieces)
+                commands.append(pieces)
     
     return commands
     
@@ -555,55 +554,17 @@ def generate_set_clock_latency():
                     pieces.append("-min")
 
                 if "-clock" in option_combination:
-                    #FIXME: Do not make this random.
-                    clk = random.choice(CLOCKS)
-                    pieces.append(f"-clock {clk}")
+                    #TODO: Might be [get_clocks ]
+                    #Always refer to clk1
+                    pieces.append(f"-clock clk1")
 
-                commands.append(" ".join(pieces))
-    
-    return commands
-
-
-    commands = []
-    optional_options = ["-source", "-rise", "-fall", "-max", "-min", "-clock"]
-
-    for j in range(len(optional_options) + 1):
-        for option_combination in combinations(optional_options, j):
-            
-            pieces = [f"set_clock_latency"]
-            
-            #Handle required positional arguments
-            #FIXME: Do not make this random.
-            delay = random.choice(DELAYS)
-            pieces.append(delay)
-            
-            #FIXME: Do not make this random.
-            #Objects is required
-            clock_pin_port_list = random.choice(CLOCKS + PINS + PORTS)
-            pieces.append(clock_pin_port_list)
-            
-            #Handle optional arguments
-            if "-source" in option_combination:
-                pieces.append("-source")
-                
-            if "-rise" in option_combination:
-                pieces.append("-rise")
-                
-            if "-fall" in option_combination:
-                pieces.append("-fall")
-                
-            if "-max" in option_combination:
-                pieces.append("-max")
-                
-            if "-min" in option_combination:
-                pieces.append("-min")
-
-            if "-clock" in option_combination:
-                #FIXME: Do not make this random.
-                clk = random.choice(CLOCKS)
-                pieces.append(f"-clock {clk}")
-
-            commands.append(" ".join(pieces))
+                #Join the options to create a proper command
+                pieces = " ".join(pieces)
+                #Add create_clock prerequisites
+                pieces = ("create_clock -period 10 -name clk1 [get_ports clk1]\n"
+                          "create_clock -period 20 -name clk2 [get_ports clk2]\n"
+                          + pieces)
+                commands.append(pieces)
     
     return commands
 
@@ -612,7 +573,8 @@ def generate_set_clock_uncertainty():
     the from variants are all mutually exclusive
     the to variants are all mutually exclusive
     -rise and -fall are alternatives to -rise_to and -fall_to. 
-    Doesn't ensure syntactic correctness
+    
+    from clock is always clk1, to clock is always clk2
     '''
     commands = [] #List containing all possible combinations of options
     
@@ -638,34 +600,28 @@ def generate_set_clock_uncertainty():
                     pieces.append("-hold")
                     
                 if "-from" in option_combination:
-                    #FIXME: Do not make this random.
-                    obj = random.choice(CLOCKS)
-                    pieces.append(f"-from {obj}")
+                    #FIXME: Maybe [get_clocks clk1] or {clk1}
+                    pieces.append(f"-from clk1")
                     
                 if "-rise_from" in option_combination:
-                    #FIXME: Do not make this random.
-                    obj = random.choice(CLOCKS)
-                    pieces.append(f"-rise_from {obj}")
+                    #FIXME: Maybe [get_clocks clk1] or {clk1}
+                    pieces.append(f"-rise_from clk1")
                     
                 if "-fall_from" in option_combination:
-                    #FIXME: Do not make this random.
-                    obj = random.choice(CLOCKS)
-                    pieces.append(f"-fall_from {obj}")
+                    #FIXME: Maybe [get_clocks clk1] or {clk1}
+                    pieces.append(f"-fall_from clk1")
 
                 if "-to" in option_combination:
-                    #FIXME: Do not make this random.
-                    obj = random.choice(CLOCKS)
-                    pieces.append(f"-to {obj}")
+                    #FIXME: Maybe [get_clocks clk2] or {clk2}
+                    pieces.append(f"-to clk2")
                     
                 if "-rise_to" in option_combination:
-                    #FIXME: Do not make this random.
-                    obj = random.choice(CLOCKS)
-                    pieces.append(f"-rise_to {obj}")
+                    #FIXME: Maybe [get_clocks clk2] or {clk2}
+                    pieces.append(f"-rise_to clk2")
                     
                 if "-fall_to" in option_combination:
-                    #FIXME: Do not make this random.
-                    obj = random.choice(CLOCKS)
-                    pieces.append(f"-fall_to {obj}")
+                    #FIXME: Maybe [get_clocks clk2] or {clk2}
+                    pieces.append(f"-fall_to clk2")
 
                 if "objects" in option_combination:
                     #FIXME: Do not make this random.
@@ -673,7 +629,13 @@ def generate_set_clock_uncertainty():
                     obj = random.choice(CLOCKS + PORTS + PINS)
                     pieces.append(f"{obj}")
 
-                commands.append(" ".join(pieces))
+                #Join the options to create a proper command
+                pieces = " ".join(pieces)
+                #Add create_clock prerequisites
+                pieces = ("create_clock -period 10 -name clk1 [get_ports clk1]\n"
+                          "create_clock -period 20 -name clk2 [get_ports clk2]\n"
+                          + pieces)
+                commands.append(pieces)
             
     return commands
 
@@ -1433,21 +1395,22 @@ def generate_files(list_of_commands, batch):
             print(f"Command '{command}' not supported. Skipped")
             continue
         
-        output_dir = os.path.join(intermediate_dir, str(command))
+        output_dir = os.path.join(temp_output_path, str(command))
         os.makedirs(output_dir, exist_ok=True)
         
         for i in range(batch):
-            text = GENERATORS[command]() #the list text contains all the commands
-            for j in range(0, len(text)):
+            gen_commands = GENERATORS[command]() #the list text contains all the commands
+            for j in range(len(gen_commands)):
                 filename = os.path.join(output_dir, f"{command}_{j}.sdc")
                 with open(filename, "w") as f: 
-                    f.write(text[j] + "\n")
-        print(f"Generated {len(text)} {command} files")
+                    f.write(gen_commands[j] + "\n")
+        print(f"Generated {len(gen_commands)} {command} files")
 
 #Main
 ##################################################################################################################################################
-command_list = ["create_clock", "set_input_delay", "set_output_delay", "set_clock_latency", "set_clock_uncertainty", 
+'''command_list = ["create_clock", "set_input_delay", "set_output_delay", "set_clock_latency", "set_clock_uncertainty", 
                 "set_false_path", "set_max_delay", "set_min_delay", "set_multicycle_path", "create_generated_clock", "all_inputs", 
                 "all_outputs", "set_clock_groups", "all_clocks", "all_registers", "set_disable_timing"]
-
+'''
+command_list = ["set_clock_latency"]
 generate_files(command_list, batch = 1)

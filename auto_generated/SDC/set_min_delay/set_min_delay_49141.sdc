@@ -1,1 +1,0 @@
-set_min_delay 30 -rise -fall -from pin1 -rise_from adder1 -fall_from [get_ports clk*] -through net1 -rise_through [get_ports clk*] -fall_through pin2 -to port2 -fall_to ff1 -ignore_clock_latency -probe -reset_path

@@ -1,1 +1,0 @@
-set_max_delay 4.0 -rise -from core_clock -fall_from [get_pins flop_Q] -through xor* -rise_through net1 -fall_through [get_ports clk*] -to port2 -rise_to * -fall_to [get_ports clk*] -ignore_clock_latency

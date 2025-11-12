@@ -1,1 +1,0 @@
-set_min_delay 30 -rise -fall -rise_through net2 -fall_through net* -to port1 -rise_to clk* -fall_to clk* -ignore_clock_latency -probe

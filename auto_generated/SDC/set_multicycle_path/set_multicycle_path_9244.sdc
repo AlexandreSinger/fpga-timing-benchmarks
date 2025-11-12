@@ -1,1 +1,0 @@
-set_multicycle_path 2 -setup -start -from [get_ports {clk0}] -fall_from clk1 -through [get_ports clk*] -rise_through adder1

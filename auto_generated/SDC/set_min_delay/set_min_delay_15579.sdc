@@ -1,1 +1,0 @@
-set_min_delay 4.0 -rise -rise_from and1 -fall_from port* -through [get_ports {clk0}] -rise_through net2 -fall_through and1 -to [get_ports {clk0}] -fall_to [get_ports clk2] -ignore_clock_latency -probe

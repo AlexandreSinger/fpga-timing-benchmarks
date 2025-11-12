@@ -1,1 +1,0 @@
-set_max_delay 30 -rise -rise_from xor1 -through xor* -rise_through xor* -rise_to {clk1 clk2} -fall_to [get_ports clk1] -probe

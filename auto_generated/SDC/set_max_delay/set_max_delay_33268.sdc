@@ -1,1 +1,0 @@
-set_max_delay 30 -rise -fall -through pin* -rise_through ff1

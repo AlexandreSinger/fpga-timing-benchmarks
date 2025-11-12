@@ -1,1 +1,0 @@
-set_min_delay 10 -rise -from port2 -rise_from * -fall_from pin1 -through [get_pins flop_Q] -fall_through net2 -to [get_ports {clk0}] -rise_to * -ignore_clock_latency

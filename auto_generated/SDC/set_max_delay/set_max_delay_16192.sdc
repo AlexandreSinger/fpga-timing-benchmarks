@@ -1,1 +1,0 @@
-set_max_delay 4.0 -rise -rise_from * -fall_from [get_ports clk*] -through ff* -rise_through net2 -fall_through [get_ports clk*] -to ff1 -rise_to [get_clocks {core_clk}] -ignore_clock_latency -probe -reset_path
