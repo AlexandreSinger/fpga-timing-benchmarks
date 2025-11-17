@@ -4,36 +4,33 @@ Description:
     -inputs specified in: PIN_LIST
     -The clock specified by the command drives the pins of this module
 SDC Example:
-    create_clock -period 5 -name ext_clk pin1
-    create_clock -period 10 [get_pins pin1]
+    create_clock -period 5 -name clk1 clk1
+    create_clock -period 10 [get_pins dff1/clk]
 */
 
 
 module create_clock (    
     input wire clk1,
     input wire clk2,
-    output reg out
+    input wire in,
+    output wire out
 );
 
-    //Instance to create pin inputs
-    wire ff_pin_out;
-    module_pin ff_pin(.clk(clk1), .pin1(clk1), .pin2(clk1), .out(clock_pin_out));
+    wire out1, out2;
+    DFF dff1(.clk(clk1), .D(in), .Q(out1));
+    DFF dff2(.clk(clk2), .D(in), .Q(out2));
 
+    assign out = out1 & out2;
 
-    //Dummy logic
-    always @(clk1) begin
-        out <= clock_pin_out;
-    end
 endmodule
 
-//Module defining pins
-module module_pin(
+//Simple DFF
+module DFF(
     input wire clk, 
-    input wire pin1,
-    input wire pin2,
-    output reg out
+    input wire D,
+    output reg Q
 );
     always @(posedge clk) begin
-        out <= pin1 | pin2;
+        Q <= D;
     end
 endmodule

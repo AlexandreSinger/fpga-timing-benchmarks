@@ -10,7 +10,7 @@ SDC Example:
 */
 
 //Main module
-module set_clock_latency(
+module set_clock_uncertainty(
     input wire clk1, //From clock
     input wire clk2, //To clock
     input wire port1, 
