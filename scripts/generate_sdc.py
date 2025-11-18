@@ -1,14 +1,14 @@
 import os
 import random
-#import parameter
 from itertools import product
 from itertools import combinations
 
 '''
 TODO
--Edit code to handle mutual exclusiveness - too many files generated
--set_disable_timing
+-get_ commands
+-set_operating_conditions
 -THE LIST OPERATING_CONDITIONS
+-change appropriate library name
 -PARAMETERS
 -PROPERTIES
 -Minor fixes/cleanup
@@ -24,9 +24,7 @@ temp_output_path = os.path.join(script_dir_path, "outputs")
 
 #PARAMETERS
 ##################################################################################################################################################
-
 PERIODS = [2, 5, 10]
-#TODO: Can the pins be an output pin? -> It depends on the command, but we can instantiate different modules for each command
 PINS = ["*", "ff_pin/pin1", "ff_pin/pin2", "ff_pin/*", "[get_pins {pin1}]", "[get_pins ff_pin/*]", "[get_pins ff_pin/pin1]"] 
 NETS = ["*", "net1", "net2", "net*", "{net1, net2}"]
 CELLS = ["cell1", "cell2", "cell*"]
@@ -40,7 +38,8 @@ CELL_INSTANCES = ["*", "reg*", "inst*", "buff*", "reg1", "inst1", "buff1", "inv1
 UNCERTAINTIES = [0.1, 1, 0.5, 0.2]
 DIVISORS = [2, 4, 5]
 EDGES = ["{1 3 5}", "{1 2 3}", "{2 4 6}", "{1 4 7}"]
-GROUP_CLOCKS = ["src_clk", "sync_clk", "gen_clk", "clk1", "[-get_clocks -filter period==2]", "[-get_clocks sync_clk]", "{clk1 clk2}", "{src_clk clk1 clk2}"] 
+CLOCK_GROUP_1 = ["[get_clocks -filter period==6]", "{clk1 clk2}", "{clk1 clk3}", "{clk2 clk4}", "{clk1 clk3 clk4}"] 
+CLOCK_GROUP_2 = ["clk1", "clk5", "{clk2 clk3}", "[get_clocks clk4]"] #Designed to prevent redundancy
 LIBRARIES = ["lib1", "lib2", "lib3"] #For set_operating_condition, these libraries should contain 'condition'
 OPERATING_CONDITIONS = [""]
 
@@ -101,7 +100,7 @@ PROPERTIES = {
     "net": NET_PROPERTIES
 }
 
-
+'''
 PATTERNS = {
     "clock": ["clk*", "*clk*", "clk[0-9]*", "clock_*"],
     "port": ["*_in", "*_out", "data*", "port*"],
@@ -109,7 +108,6 @@ PATTERNS = {
     "cell": ["inst*", "reg_*", "*_buffer"],
     "net": ["net*", "n[0-9]*", "*_data"]
     }
-'''
 #HELPER FUNCTIONS
 ##################################################################################################################################################
 def choose_object_type():
@@ -207,6 +205,7 @@ def generate_create_clock():
     #List containing all possible combinations of options
     commands = []
     optional_options = ["-name", "-waveform", "-add", "pin_list"]
+    pin_list = ["clk1", "clk2", "[get_ports clk1]", "dff1/clk", "dff2/clk", "[get_pins dff1/clk]"]
     
     for i in range(len(PERIODS)):
         period = PERIODS[i]
@@ -1158,7 +1157,7 @@ def generate_set_clock_groups():
     commands = []
     optional_flags = ["-name", "-logically_exclusive", "-physically_exclusive", "-asynchronous", "-allow_paths"]
     
-    for num_groups in [1, 2, 3]: 
+    for num_groups in [1, 2]: 
         
         for i in range(len(optional_flags) + 1):
             for option_combination in combinations(optional_flags, i):
@@ -1182,13 +1181,24 @@ def generate_set_clock_groups():
                     pieces.append("-allow_paths")
                 
                 #FIXME: Do not make this random.
-                #Ensure num_groups is not larger than the list
-                if len(GROUP_CLOCKS) >= num_groups:
-                    groups = random.sample(GROUP_CLOCKS, num_groups)
+                if num_groups == 1: #Choose one clock group
+                    group = random.choice(CLOCK_GROUP_1)
+                    pieces.append(f"-group {group}")
+                if num_groups == 2: #Choose two clock groups
+                    groups = random.sample(CLOCK_GROUP_2, 2)
                     for clk_group in groups:
                         pieces.append(f"-group {clk_group}")
 
-                commands.append(" ".join(pieces))
+                #Join the options to create a proper command
+                pieces = " ".join(pieces)
+                #Add create_clock prerequisites
+                pieces = ("create_clock -period 10 -name clk1 [get_ports clk1]\n"
+                          "create_clock -period 10 -name clk2 [get_ports clk2]\n"
+                          "create_clock -period 6 -name clk3 [get_ports clk3]\n"
+                          "create_clock -period 2 -name clk4 [get_ports clk4]\n"
+                          "create_clock -period 2 -name clk5 [get_ports clk5]\n"
+                          + pieces)
+                commands.append(pieces)
             
     return commands
 
@@ -1286,7 +1296,13 @@ def generate_all_registers():
             if len(found_exclusive) == 1:
                 pieces.append(found_exclusive[0])
                 
-            commands.append(" ".join(pieces))
+            #Join the options to create a proper command
+            pieces = " ".join(pieces)
+            #Add create_clock prerequisites
+            pieces = ("create_clock -period 10 -name clk1 [get_ports clk1]\n"
+                      "create_clock -period 5 -name clk2 [get_ports clk2]\n"
+                      + pieces)
+            commands.append(pieces)
     
     return commands
 
