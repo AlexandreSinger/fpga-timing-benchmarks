@@ -54,3 +54,14 @@ class BasicBenchmark(Benchmark):
                     sdc_file=os.path.join(sdc_files_dir, f"{multiclock_cdc_test_name}.sdc")
                 )
             )
+
+        # RCA designs.
+        self.designs.append(
+            TimingTestDesign(
+                test_name="rca_easy",
+                netlist_file=os.path.join(netlist_files_dir, "rca.v"),
+                netlist_type=NetlistType.VERILOG,
+                top_level_module="rca",
+                sdc_file=os.path.join(sdc_files_dir, "rca_easy.sdc")
+            )
+        )
