@@ -34,6 +34,11 @@ class BasicBenchmark(Benchmark):
             "set_clock_latency_feedback",
         ]
 
+        rca_tests = [
+            "rca_easy",
+            "rca_easy_2",
+        ]
+
         for simple_flop_sdc_test_name in simple_flop_sdc_tests:
             self.designs.append(
                 TimingTestDesign(
@@ -55,13 +60,13 @@ class BasicBenchmark(Benchmark):
                 )
             )
 
-        # RCA designs.
-        self.designs.append(
-            TimingTestDesign(
-                test_name="rca_easy",
-                netlist_file=os.path.join(netlist_files_dir, "rca.v"),
-                netlist_type=NetlistType.VERILOG,
-                top_level_module="rca",
-                sdc_file=os.path.join(sdc_files_dir, "rca_easy.sdc")
+        for rca_test_name in rca_tests:
+            self.designs.append(
+                TimingTestDesign(
+                    test_name=rca_test_name,
+                    netlist_file=os.path.join(netlist_files_dir, "rca.v"),
+                    netlist_type=NetlistType.VERILOG,
+                    top_level_module="rca",
+                    sdc_file=os.path.join(sdc_files_dir, f"{rca_test_name}.sdc")
+                )
             )
-        )
