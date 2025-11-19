@@ -18,7 +18,8 @@ version = {attr = "fpga_timing_benchmarks.__version__"}
 
 [project.optional-dependencies]
 lint = [
-    "flake8 == 7.3.0"
+    "flake8 == 7.3.0",
+    "tclint == 0.6.1",
 ]
 vis_scripts = [
     "pandas>=2.0.0",
