@@ -5,7 +5,7 @@ will be using the SiliconCompiler project to manage the tools and versions.
 The following commands should install the correct versions of the tools that this
 project requires..
 ```
-# Optional: Create a python virtual enviornment.
+# Optional: Create a python virtual environment.
 python3 -m venv .venv
 source .venv/bin/activate
 

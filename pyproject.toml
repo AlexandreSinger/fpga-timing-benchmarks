@@ -20,6 +20,7 @@ version = {attr = "fpga_timing_benchmarks.__version__"}
 lint = [
     "flake8 == 7.3.0",
     "tclint == 0.6.1",
+    "codespell == 2.4.1",
 ]
 vis_scripts = [
     "pandas>=2.0.0",
@@ -31,3 +32,23 @@ include-package-data = true
 packages = [
     "fpga_timing_benchmarks"
 ]
+
+[tool.tclint]
+exclude = [
+    'z1010/',
+    'runs/',
+    '.venv/',
+    'build/',
+]
+
+[tool.tclint.style]
+line-length = 100
+indent = 4
+max-blank-lines = 1
+spaces-in-braces = true
+
+[tool.codespell]
+skip = '*/build/*,*/z1010/*,*.v,*/runs/*'
+count = true
+quiet-level = 3
+ignore-words-list = 'synopsys,inout,subtile,FRAM,dffer,dffers'

@@ -51,7 +51,7 @@ def synthesize_circuit(verilog_file: Path,
 
     Args:
         verilog_file (Path): The path to the verilog file to synthesize.
-        top_level_module (str): The name of the top-level module for the ciruit.
+        top_level_module (str): The name of the top-level module for the circuit.
         output_netlist_file (Path): The Path for the output Verilog file.
         output_blif_file (Path): The Path for the output blif file.
         run_dir (Path): The directory to run Yosys in.
