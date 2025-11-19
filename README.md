@@ -49,7 +49,7 @@ tar -xvzf z1010_cad.tar.gz
 
 ```py
 # Run the benchmarks through the test suite.
-python3 run_syntax_suite.py
+python3 run_suite.py
 
 # The results are returned as a CSV file in a run directory.
 # Optional: These results can be visualized using the following script:
