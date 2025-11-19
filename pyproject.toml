@@ -20,6 +20,10 @@ version = {attr = "fpga_timing_benchmarks.__version__"}
 lint = [
     "flake8 == 7.3.0"
 ]
+vis_scripts = [
+    "pandas>=2.0.0",
+    "matplotlib>=3.6.0",
+]
 
 [tool.setuptools]
 include-package-data = true
