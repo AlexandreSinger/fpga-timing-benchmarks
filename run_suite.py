@@ -51,7 +51,7 @@ def synthesize_circuit(verilog_file: Path,
 
     Args:
         verilog_file (Path): The path to the verilog file to synthesize.
-        top_level_module (str): The name of the top-level module for the ciruit.
+        top_level_module (str): The name of the top-level module for the circuit.
         output_netlist_file (Path): The Path for the output Verilog file.
         output_blif_file (Path): The Path for the output blif file.
         run_dir (Path): The directory to run Yosys in.
@@ -249,6 +249,248 @@ def test_vpr_sdc_syntax(sdc_file: Path,
     return True
 
 
+def place_and_route_with_vpr(sdc_file: Path,
+                             blif_file: Path,
+                             fpga_arch: FPGAArch,
+                             run_dir: Path) -> bool:
+    """
+    Run place and route on the given circuit and SDC constraints using VPR.
+    This will run VPR and generate the post-implementation netlist and timing
+    information that OpenSTA can use to verify the timing of the circuit.
+
+    Args:
+        sdc_file (Path): The Path to the SDC file.
+        blif_file (Path): The Path to the blif file.
+        fpga_arch (FPGAArch): The FPGA architecture to run VPR on.
+        run_dir (Path): The directory to run VPR in.
+
+    Returns:
+        bool: If VPR successfully performed place and route or not.
+    """
+    assert fpga_arch.verify()
+    assert os.path.exists(sdc_file)
+    assert os.path.exists(blif_file)
+    assert os.path.exists(run_dir)
+
+    # Change the current directory to the given run directory.
+    os.chdir(run_dir)
+
+    # Create a process that will run VPR with the given SDC file. This does not
+    # need to run VPR to completion, so we only run up to the end of packing.
+    process_args = ["vpr",
+                    fpga_arch.arch_xml_file,
+                    blif_file,
+                    "--device", fpga_arch.device,
+                    "--sdc_file", sdc_file,
+                    "--read_rr_graph", fpga_arch.arch_rr_graph,
+                    "--route_chan_width", str(fpga_arch.route_chan_w),
+                    "--router_lookahead", "classic",
+                    "--gen_post_synthesis_netlist", "on",
+                    "--gen_post_implementation_sdc", "on",
+                    "--post_synth_netlist_unconn_inputs", "gnd",
+                    "--post_synth_netlist_module_parameters", "off",
+                    "--pack",
+                    "--place",
+                    "--route"]
+    process = Popen(process_args,
+                    stdout=PIPE,
+                    stderr=PIPE)
+
+    # Run the process.
+    try:
+        stdout, stderr = process.communicate(timeout=None)
+    except TimeoutExpired:
+        process.kill()
+        stdout, stderr = process.communicate()
+
+    # Save stdout and stderr to files for debugging.
+    with open("vpr_place_and_route.out", "w") as f:
+        f.write(stdout.decode())
+        f.close()
+    with open("vpr_place_and_route_err.out", "w") as f:
+        f.write(stderr.decode())
+        f.close()
+
+    # Check if VPR failed to run.
+    if stdout.decode().find("VPR succeeded") == -1:
+        return False
+
+    return True
+
+
+def get_vpr_timing_results(run_dir: Path) -> (float, float):
+    """
+    Get the timing results from the last place and route performed using VPR.
+
+    Args:
+        run_dir (Path): Path to the directory that ran VPR.
+
+    Returns:
+        (float, float): wns, tns
+    """
+    vpr_wns = None
+    vpr_tns = None
+    vpr_run_stdout = os.path.join(run_dir, "vpr_place_and_route.out")
+    assert os.path.exists(vpr_run_stdout)
+    with open(vpr_run_stdout, "r") as f:
+        for line in f.readlines():
+            wns_match = re.search(r"^Final setup Worst Negative Slack \(sWNS\): (\S+) ns",
+                                  line)
+            tns_match = re.search(r"^Final setup Total Negative Slack \(sTNS\): (\S+) ns",
+                                  line)
+            if wns_match:
+                assert vpr_wns is None
+                vpr_wns = float(wns_match.group(1))
+            if tns_match:
+                assert vpr_tns is None
+                vpr_tns = float(tns_match.group(1))
+
+    return (vpr_wns, vpr_tns)
+
+
+def verify_vpr_timing_analysis_with_opensta(liberty_files: List[Path],
+                                            top_level_module: str,
+                                            run_dir: Path) -> bool:
+    """
+    Verify VPR's timing analysis by doing post-implementation timing analysis
+    with OpenSTA and check that it gets a similar answer to VPR.
+
+    Args:
+        liberty_files (List[Path]): List of liberty files for the FPGA architecture.
+        top_level_module (str): The top-level module for the circuit.
+        run_dir (Path): Path to the directory to run OpenSTA in.
+
+    Returns:
+        bool: If the timings between VPR and OpenSTA are similar or not.
+    """
+    assert all(os.path.exists(f) for f in liberty_files)
+    assert os.path.exists(run_dir)
+
+    # Change the current directory to the given run directory.
+    os.chdir(run_dir)
+
+    # Get the post-implementation netlist and timing files from the last run
+    # of VPR.
+    # NOTE: This is a bit of a hack since we cannot control the names of these
+    #       files.
+    post_impl_netlist = os.path.join(run_dir, f"{top_level_module}_post_synthesis.v")
+    post_impl_sdc = os.path.join(run_dir, f"{top_level_module}_post_synthesis.sdc")
+    post_impl_sdf = os.path.join(run_dir, f"{top_level_module}_post_synthesis.sdf")
+
+    # Create the path to a TCL file which will be used to verify the SDC file.
+    tcl_file = os.path.join(run_dir, "verify_vpr.tcl")
+
+    # Create a tcl file to perform post-implementation timing analysis.
+    with open(tcl_file, "w") as f:
+        # Read the verilog file.
+        f.write(f"read_verilog {post_impl_netlist}\n")
+        # Read the liberty files.
+        for liberty_file in liberty_files:
+            f.write(f"read_liberty {liberty_file}\n")
+        # Link the top-level module.
+        f.write(f"link_design {top_level_module}\n")
+        # Read the sdf file.
+        f.write(f"read_sdf {post_impl_sdf}\n")
+        # Read the SDC file. This command will throw an error if there is
+        # something wrong with the SDC file.
+        f.write(f"read_sdc {post_impl_sdc}\n")
+
+        f.write("report_checks "
+                "-group_path_count 100 "
+                "-digits 3 "
+                "-path_delay max "
+                "> open_sta_report_timing.setup.rpt\n")
+        f.write("report_checks "
+                "-group_path_count 100 "
+                "-digits 3 "
+                "-path_delay min "
+                "> open_sta_report_timing.hold.rpt\n")
+        f.write("report_wns\n")
+        f.write("report_tns\n")
+
+    # Create a process which will run the TCL file through OpenSTA (whatever
+    # is in the PATH).
+    process_args = ["sta",
+                    "-exit",
+                    "-no_splash",
+                    tcl_file]
+    process = Popen(process_args,
+                    stdout=PIPE,
+                    stderr=PIPE)
+
+    # Run the process.
+    try:
+        stdout, stderr = process.communicate(timeout=None)
+    except TimeoutExpired:
+        process.kill()
+        stdout, stderr = process.communicate()
+
+    # Save stdout and stderr to files for debugging.
+    with open("sta_verify_vpr.out", "w") as f:
+        f.write(stdout.decode())
+        f.close()
+    with open("sta_verify_vpr_err.out", "w") as f:
+        f.write(stderr.decode())
+        f.close()
+
+    # Check if stdout or stderr contain any "Error"s.
+    if str(stdout).find("Error") != -1:
+        return False
+    if str(stderr).find("Error") != -1:
+        return False
+
+    # Parse the wns and tns from OpenSTA
+    opensta_wns = None
+    opensta_tns = None
+    for line in stdout.splitlines():
+        wns_match = re.search(r"^wns max (\S+)",
+                              line.decode())
+        tns_match = re.search(r"^tns max (\S+)",
+                              line.decode())
+        if wns_match:
+            assert opensta_wns is None
+            opensta_wns = float(wns_match.group(1))
+        if tns_match:
+            assert opensta_tns is None
+            opensta_tns = float(tns_match.group(1))
+
+    if opensta_wns is None or opensta_tns is None:
+        return False
+
+    # Parse the wns and tns from VPR
+    (vpr_wns, vpr_tns) = get_vpr_timing_results(run_dir)
+    if vpr_wns is None or vpr_tns is None:
+        return False
+
+    # Check that the two tools mostly agree on WNS and TNS
+    if abs(opensta_wns - vpr_wns) >= 0.01 * max(abs(opensta_wns), abs(vpr_wns)) + 0.006:
+        return False
+    if abs(opensta_tns - vpr_tns) >= 0.01 * max(abs(opensta_tns), abs(vpr_tns)) + 0.006:
+        return False
+
+    return True
+
+
+def does_vpr_meet_timing(run_dir: Path) -> bool:
+    """
+    Checks if vpr met timing with this benchmark when it ran place and route.
+
+    Args:
+        run_dir (Path): Path to the directory that ran vpr.
+
+    Returns:
+        bool: True if VPR meets timing, false otherwise.
+    """
+    (vpr_wns, vpr_tns) = get_vpr_timing_results(run_dir)
+    if vpr_wns is None:
+        return False
+
+    if abs(vpr_wns) > 0.0:
+        return False
+
+    return True
+
+
 def create_run_dir(base_dir: Path) -> Path:
     """
     Given a base run directory, create a unique run folder within it. If the
@@ -311,6 +553,9 @@ if __name__ == "__main__":
         "Test Name",
         "SDC Verified with OpenSTA?",
         "SDC Parsed by VPR Without Error?",
+        "Place and Route Succeeded?",
+        "VPR and OpenSTA Have Similar Timings?",
+        "Did VPR Meet Timing?",
     ]]
 
     # Test the given design.
@@ -351,11 +596,41 @@ if __name__ == "__main__":
         else:
             print("\tVPR failed to parse the SDC file.")
 
+        place_and_route_succeeded = "NULL"
+        vpr_timing_valid = "NULL"
+        vpr_meets_timing = "NULL"
+        if vpr_succeeded:
+            place_and_route_succeeded = place_and_route_with_vpr(sdc_file=design.sdc_file,
+                                                                 blif_file=output_blif_file,
+                                                                 fpga_arch=z1010_fpga,
+                                                                 run_dir=design_run_dir_path)
+
+            if place_and_route_succeeded:
+                print("\t\tPlace and route succeeded.")
+                vpr_timing_valid = verify_vpr_timing_analysis_with_opensta(
+                        liberty_files=z1010_fpga.liberty_files,
+                        top_level_module=design.top_level_module,
+                        run_dir=design_run_dir_path)
+                if vpr_timing_valid:
+                    print("\t\t\tPlace and route timing is valid")
+                    vpr_meets_timing = does_vpr_meet_timing(run_dir=design_run_dir_path)
+                    if vpr_meets_timing:
+                        print("\t\t\t\tPlace and Route met timing")
+                    else:
+                        print("\t\t\t\tPlace and Route did not meet timing!")
+                else:
+                    print("\t\t\tPlace and route timing found to be invalid")
+            else:
+                print("\t\tPlace and route failed!")
+
         result_data.append([
             basic_benchmark.name,
             design.test_name,
             str(sdc_is_valid),
             str(vpr_succeeded),
+            str(place_and_route_succeeded),
+            str(vpr_timing_valid),
+            str(vpr_meets_timing),
         ])
 
     # Write the results to a CSV file.

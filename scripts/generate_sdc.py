@@ -304,7 +304,7 @@ def generate_get_clocks():
             pieces = ["get_clocks"]
 
             if "-filter" in option_combination:
-                #Filter epression with object type "clock"
+                #Filter expression with object type "clock"
                 filter_type = choose_filter_type()
                 expr = generate_filter(filter_type, "clock")
                 pieces.append(f"-filter {expr}")
