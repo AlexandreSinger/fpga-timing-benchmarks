@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   lint_python:
@@ -25,3 +25,38 @@ jobs:
       - name: Lint with Flake8
         run: flake8 --statistics .
 
+  lint_tcl:
+    name: Lint TCL Scripts
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v5
+
+      - name: Install Requirements
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install .[lint]
+
+      - name: Lint with tclint
+        run: |
+          tclfmt --check .
+          tclint .
+
+  spelling:
+    name: Check Spelling
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v5
+
+      - name: Install Requirements
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install .[lint]
+
+      - name: Check Spelling
+        run: codespell
