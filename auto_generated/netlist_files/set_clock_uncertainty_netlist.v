@@ -19,7 +19,7 @@ module set_clock_uncertainty(
 );
     //Simple CDC for inter-clock uncertainty
     //Internal data from clk1 to clk2
-    wire data_internal;
+    reg data_internal;
 
     always @(posedge clk1) begin
         data_internal <= port1;
@@ -44,7 +44,7 @@ module set_clock_uncertainty(
 
     //Dummy logic
     always @(posedge clk1) begin
-        out <= port1 & port2
+        out <= port1 & port2;
     end
 
 endmodule

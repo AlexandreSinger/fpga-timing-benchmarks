@@ -46,7 +46,7 @@ module inst2(
     output reg net2_out
 );
     always @(posedge clk2) begin
-        pin2 <= net1_in
-        net2_out <= ~net1_in
+        pin2 <= net1_in;
+        net2_out <= ~net1_in;
     end
 endmodule

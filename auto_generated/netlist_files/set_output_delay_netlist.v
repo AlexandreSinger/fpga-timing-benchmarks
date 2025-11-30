@@ -18,7 +18,7 @@ module set_output_delay (
 
     //Instance to create 'ref_pin' (ff_ref/clk)
     wire ff_ref_q;
-    FF ff_ref (.clk(src_clk), .D(data_in), .Q(ff_ref_q));
+    FF_ref ff_ref (.clk(src_clk), .D(data_in), .Q(ff_ref_q));
 
     //Instance to create pin outputs(ff_pin/pin1 and ff_pin/pin2)
     wire ff_pin_pin1;
