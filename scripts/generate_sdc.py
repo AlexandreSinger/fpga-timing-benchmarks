@@ -707,7 +707,7 @@ def generate_set_false_path():
             #FIXME: Don't make this random
             from_obj = random.choice(from_list)
             through_obj = random.choice(through_list)
-            to_obj = random.choice(through_list)
+            to_obj = random.choice(to_list)
             
             if "-setup" in option_combination:
                 pieces.append("-setup")
@@ -801,7 +801,7 @@ def generate_set_max_delay():
             #FIXME: Don't make this random
             from_obj = random.choice(from_list)
             through_obj = random.choice(through_list)
-            to_obj = random.choice(through_list)
+            to_obj = random.choice(to_list)
             
             if "-rise" in option_combination:
                 pieces.append("-rise")
@@ -896,7 +896,7 @@ def generate_set_min_delay():
             #FIXME: Don't make this random
             from_obj = random.choice(from_list)
             through_obj = random.choice(through_list)
-            to_obj = random.choice(through_list)
+            to_obj = random.choice(to_list)
             
             if "-rise" in option_combination:
                 pieces.append("-rise")
@@ -993,7 +993,7 @@ def generate_set_multicycle_path():
             #FIXME: Don't make this random
             from_obj = random.choice(from_list)
             through_obj = random.choice(through_list)
-            to_obj = random.choice(through_list)
+            to_obj = random.choice(to_list)
                 
             if "-setup" in option_combination:
                 pieces.append("-setup")
@@ -1513,6 +1513,6 @@ command_list = ["create_clock", "set_input_delay", "set_output_delay", "set_cloc
                 "set_false_path", "set_max_delay", "set_min_delay", "set_multicycle_path", "create_generated_clock", "all_inputs", 
                 "all_outputs", "set_clock_groups", "all_clocks", "all_registers"] 
 '''
-command_list = ["create_generated_clock"]
+command_list = ["set_false_path", "set_min_delay", "set_max_delay", "set_multicycle_path"]
 
 generate_files(command_list, batch = 1)

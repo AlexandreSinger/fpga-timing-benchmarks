@@ -11,6 +11,7 @@ SDC Example:
 
 //Main module
 module set_disable_timing(
+    input wire clk1,
     input wire D, 
     output reg Q
 );
