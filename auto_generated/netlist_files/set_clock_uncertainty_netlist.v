@@ -19,7 +19,7 @@ module set_clock_uncertainty(
 );
     //Simple CDC for inter-clock uncertainty
     //Internal data from clk1 to clk2
-    wire data_internal;
+    reg data_internal;
 
     always @(posedge clk1) begin
         data_internal <= port1;
@@ -41,12 +41,6 @@ module set_clock_uncertainty(
     //Instance to create pin inputs (ff_pin/pin1 and ff_pin/pin2)
     wire ff_pin_out;
     module_pin ff_pin(.clk(clk1), .pin1(clk1), .pin2(clk2), .out(ff_pin_out));
-
-    //Dummy logic
-    always @(posedge clk1) begin
-        out <= port1 & port2
-    end
-
 endmodule
 
 //Module defining pins
